@@ -12,10 +12,9 @@ final class Day3: Solver {
     }
 
     func solveFirst(input lines: [String]) throws -> String {
-        let fabric = Matrix<Int>(width: 1001, height: 1001, initialValue: 0)
         let squares = lines
             .map(Claim.init)
-            .reduce(into: fabric) { fabric, claim in
+            .reduce(into: Matrix<Int>(width: 1000, height: 1000, initialValue: 0)) { fabric, claim in
                 claim.rect.forEach { p in
                     fabric[x: p.x, y: p.y] += 1
                 }
@@ -27,7 +26,18 @@ final class Day3: Solver {
     }
 
     func solveSecond(input lines: [String]) throws -> String {
-        return ""
+        let claims = lines.map(Claim.init)
+        let fabric = claims
+            .reduce(into: Matrix<Int>(width: 1000, height: 1000, initialValue: 0)) { fabric, claim in
+                claim.rect.forEach { p in
+                    fabric[x: p.x, y: p.y] += 1
+                }
+            }
+        let single = claims.first(where: { claim in
+            claim.rect.allSatisfy({ p in fabric[x: p.x, y: p.y] == 1 })
+        })
+
+        return single!.id
     }
 }
 

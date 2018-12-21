@@ -4,17 +4,17 @@
 
 import Foundation
 
-struct Point {
+struct Point: Hashable {
     var x: Int
     var y: Int
 }
 
-struct Size {
+struct Size: Hashable {
     var width: Int
     var height: Int
 }
 
-struct Rect {
+struct Rect: Hashable {
     var origin: Point
     var size: Size
 }
