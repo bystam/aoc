@@ -11,8 +11,8 @@ final class Day3: Solver {
         let rect: Rect
     }
 
-    func solveFirst(input lines: [String]) throws -> String {
-        let squares = lines
+    func solveFirst(input: Input) throws -> String {
+        let squares = input.lines()
             .map(Claim.init)
             .reduce(into: Matrix<Int>(width: 1000, height: 1000, initialValue: 0)) { fabric, claim in
                 claim.rect.forEach { p in
@@ -25,8 +25,8 @@ final class Day3: Solver {
         return squares.description
     }
 
-    func solveSecond(input lines: [String]) throws -> String {
-        let claims = lines.map(Claim.init)
+    func solveSecond(input: Input) throws -> String {
+        let claims = input.lines().map(Claim.init)
         let fabric = claims
             .reduce(into: Matrix<Int>(width: 1000, height: 1000, initialValue: 0)) { fabric, claim in
                 claim.rect.forEach { p in

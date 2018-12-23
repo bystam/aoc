@@ -24,9 +24,9 @@ final class Day4: Solver {
         let mostPopularMinuteTime: Int
     }
 
-    func solveFirst(input lines: [String]) throws -> String {
+    func solveFirst(input: Input) throws -> String {
         var guardId: String = ""
-        return lines
+        return input.lines()
             .sorted()
             .map { Event.parse(line: $0, guardId: &guardId) }
             .grouped(by: ^\.guardId)
@@ -36,9 +36,9 @@ final class Day4: Solver {
             .description
     }
 
-    func solveSecond(input lines: [String]) throws -> String {
+    func solveSecond(input: Input) throws -> String {
         var guardId: String = ""
-        return lines
+        return input.lines()
             .sorted()
             .map { Event.parse(line: $0, guardId: &guardId) }
             .grouped(by: ^\.guardId)

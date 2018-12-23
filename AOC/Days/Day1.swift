@@ -6,16 +6,16 @@ import Foundation
 
 final class Day1: Solver {
 
-    func solveFirst(input lines: [String]) throws -> String {
-        let sum: Int = lines
+    func solveFirst(input: Input) throws -> String {
+        return input.lines()
             .compactMap(Int.init)
             .reduce(0, +)
-        return String(sum)
+            .description
     }
 
-    func solveSecond(input lines: [String]) throws -> String {
+    func solveSecond(input: Input) throws -> String {
         var seen: Set<Int> = []
-        return lines
+        return input.lines()
             .infinatelyRepeated()
             .lazy
             .map(parseInt)

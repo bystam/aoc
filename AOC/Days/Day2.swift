@@ -13,8 +13,8 @@ final class Day2: Solver {
         var checksum: Int { return twos * threes }
     }
 
-    func solveFirst(input lines: [String]) throws -> String {
-        return lines
+    func solveFirst(input: Input) throws -> String {
+        return input.lines()
             .map { line in line.countedOccurrences() }
             .reduce(into: ChecksumParts(), { acc, lineCharacterCount in
                 if lineCharacterCount.values.contains(2) {
@@ -28,7 +28,8 @@ final class Day2: Solver {
             .description
     }
 
-    func solveSecond(input lines: [String]) throws -> String {
+    func solveSecond(input: Input) throws -> String {
+        let lines = input.lines()
         for line1 in lines {
             for line2 in lines {
                 let lcs = line1.lcs(with: line2)

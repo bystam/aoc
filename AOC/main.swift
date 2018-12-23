@@ -4,36 +4,12 @@
 
 import Foundation
 
-private extension Solver {
-
-    func solveFirst(file: File) throws -> String {
-        let data = try Data(contentsOf: file.url)
-        let lines = String(data: data, encoding: .utf8)!.split(separator: "\n").map(String.init)
-        return try solveFirst(input: lines)
-    }
-
-    func solveSecond(file: File) throws -> String {
-        let data = try Data(contentsOf: file.url)
-        let lines = String(data: data, encoding: .utf8)!.split(separator: "\n").map(String.init)
-        return try solveSecond(input: lines)
-    }
-}
-
-private struct File {
-    let url: URL
-
-    init(index: Int) {
-        let home = FileManager.default.homeDirectoryForCurrentUser
-        self.url = home.appendingPathComponent("/workspace/AOC/days/day\(index)")
-    }
-}
-
 private func solve(day: Int) throws {
-    let file = File(index: day)
+    let input = try Input(file: File(index: day))
     let s = solver(at: day)
     print("Solutions for day \(day)")
-    print("A: \(try s.solveFirst(file: file))")
-    print("B: \(try s.solveSecond(file: file))")
+    print("A: \(try s.solveFirst(input: input))")
+    print("B: \(try s.solveSecond(input: input))")
 }
 
 private func solver(at index: Int) -> Solver {
