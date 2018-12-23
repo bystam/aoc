@@ -54,6 +54,31 @@ extension Sequence {
             acc[try identity(element), default: []].append(element)
         })
     }
+
+    func segmented(size: Int) -> AnySequence<[Element]> {
+        var buffer: [Element] = Array(prefix(size))
+        precondition(buffer.count == size)
+
+        var isFirst = true
+        var iterator = dropFirst(size).makeIterator()
+        return AnySequence<[Element]> { () -> AnyIterator<[Element]> in
+            return AnyIterator<[Element]> { () -> [Element]? in
+                if isFirst {
+                    isFirst = false
+                    return buffer
+                }
+                guard let next = iterator.next() else { return nil }
+                buffer.append(next)
+                if buffer.count > size {
+                    buffer.remove(at: 0)
+                }
+                if buffer.count == size {
+                    return buffer
+                }
+                return nil
+            }
+        }
+    }
 }
 
 extension Sequence where Element: Hashable {

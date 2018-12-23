@@ -18,7 +18,7 @@ private func solver(at index: Int) -> Solver {
     case 2: return Day2()
     case 3: return Day3()
     case 4: return Day4()
-//    case 5: return Day5()
+    case 5: return Day5()
 //    case 6: return Day6()
 //    case 7: return Day7()
 //    case 8: return Day8()
@@ -28,7 +28,7 @@ private func solver(at index: Int) -> Solver {
 }
 
 do {
-    try solve(day: 4)
+    try solve(day: 5)
 } catch let error {
     print(error)
 }
