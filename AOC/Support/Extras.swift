@@ -4,6 +4,12 @@
 
 import Foundation
 
+prefix operator ^
+
+prefix func ^<T, K>(_ keyPath: KeyPath<T, K>) -> (T) -> K {
+    return { $0[keyPath: keyPath] }
+}
+
 func parseInt(_ string: String) -> Int {
     return Int(string)!
 }

@@ -8,13 +8,14 @@
 
 /* Begin PBXBuildFile section */
 		EB11DB6221B885D900340117 /* Extras.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB11DB6121B885D900340117 /* Extras.swift */; };
+		EB17C0AC21CEE30D00438906 /* Day4.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB17C0AB21CEE30D00438906 /* Day4.swift */; };
 		EB4786A621B8766D0071500F /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB4786A521B8766D0071500F /* main.swift */; };
 		EB4786AF21B876CB0071500F /* Solver.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB4786AE21B876CB0071500F /* Solver.swift */; };
 		EB4786B121B877190071500F /* Day1.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB4786B021B877190071500F /* Day1.swift */; };
 		EB867F3721CD35ED008247F6 /* Day2.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB867F3621CD35ED008247F6 /* Day2.swift */; };
 		EB867F3F21CD400F008247F6 /* AOCTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB867F3E21CD400F008247F6 /* AOCTests.swift */; };
 		EB867F4521CD417D008247F6 /* Day3.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB867F4421CD417D008247F6 /* Day3.swift */; };
-		EB867F4721CD7701008247F6 /* DumbassRegex.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB867F4621CD7701008247F6 /* DumbassRegex.swift */; };
+		EB867F4721CD7701008247F6 /* Regex.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB867F4621CD7701008247F6 /* Regex.swift */; };
 		EB867F4921CD7C25008247F6 /* LinearAlgebra.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB867F4821CD7C25008247F6 /* LinearAlgebra.swift */; };
 /* End PBXBuildFile section */
 
@@ -32,6 +33,7 @@
 
 /* Begin PBXFileReference section */
 		EB11DB6121B885D900340117 /* Extras.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extras.swift; sourceTree = "<group>"; };
+		EB17C0AB21CEE30D00438906 /* Day4.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day4.swift; sourceTree = "<group>"; };
 		EB4786A221B8766D0071500F /* AOC */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = AOC; sourceTree = BUILT_PRODUCTS_DIR; };
 		EB4786A521B8766D0071500F /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		EB4786AE21B876CB0071500F /* Solver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Solver.swift; sourceTree = "<group>"; };
@@ -41,7 +43,7 @@
 		EB867F3E21CD400F008247F6 /* AOCTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AOCTests.swift; sourceTree = "<group>"; };
 		EB867F4021CD400F008247F6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EB867F4421CD417D008247F6 /* Day3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day3.swift; sourceTree = "<group>"; };
-		EB867F4621CD7701008247F6 /* DumbassRegex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DumbassRegex.swift; sourceTree = "<group>"; };
+		EB867F4621CD7701008247F6 /* Regex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Regex.swift; sourceTree = "<group>"; };
 		EB867F4821CD7C25008247F6 /* LinearAlgebra.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinearAlgebra.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -98,6 +100,7 @@
 				EB4786B021B877190071500F /* Day1.swift */,
 				EB867F3621CD35ED008247F6 /* Day2.swift */,
 				EB867F4421CD417D008247F6 /* Day3.swift */,
+				EB17C0AB21CEE30D00438906 /* Day4.swift */,
 			);
 			path = Days;
 			sourceTree = "<group>";
@@ -106,7 +109,7 @@
 			isa = PBXGroup;
 			children = (
 				EB11DB6121B885D900340117 /* Extras.swift */,
-				EB867F4621CD7701008247F6 /* DumbassRegex.swift */,
+				EB867F4621CD7701008247F6 /* Regex.swift */,
 				EB867F4821CD7C25008247F6 /* LinearAlgebra.swift */,
 			);
 			path = Support;
@@ -211,11 +214,12 @@
 			files = (
 				EB11DB6221B885D900340117 /* Extras.swift in Sources */,
 				EB867F3721CD35ED008247F6 /* Day2.swift in Sources */,
-				EB867F4721CD7701008247F6 /* DumbassRegex.swift in Sources */,
+				EB867F4721CD7701008247F6 /* Regex.swift in Sources */,
 				EB4786AF21B876CB0071500F /* Solver.swift in Sources */,
 				EB867F4921CD7C25008247F6 /* LinearAlgebra.swift in Sources */,
 				EB4786B121B877190071500F /* Day1.swift in Sources */,
 				EB867F4521CD417D008247F6 /* Day3.swift in Sources */,
+				EB17C0AC21CEE30D00438906 /* Day4.swift in Sources */,
 				EB4786A621B8766D0071500F /* main.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -4,7 +4,7 @@
 
 import Foundation
 
-final class DumbassRegex {
+final class Regex {
 
     struct Match {
         fileprivate let source: String
@@ -23,7 +23,7 @@ final class DumbassRegex {
     }
 }
 
-extension DumbassRegex.Match {
+extension Regex.Match {
 
     func capturedValue<T: LosslessStringConvertible>(at index: Int, type: T.Type) -> T? {
         return capturedValue(at: index)

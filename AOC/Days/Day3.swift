@@ -41,7 +41,7 @@ final class Day3: Solver {
     }
 }
 
-private let regex = DumbassRegex("#(\\d+) @ (\\d+),(\\d+): (\\d+)x(\\d+)")
+private let regex = Regex("#(\\d+) @ (\\d+),(\\d+): (\\d+)x(\\d+)")
 
 extension Day3.Claim {
 
