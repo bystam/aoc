@@ -4,31 +4,29 @@
 
 import Foundation
 
-private func solve(day: Int) throws {
+private let kSolvers: [Solver] = [
+    Day1(),
+    Day2(),
+    Day3(),
+    Day4(),
+    Day5(),
+    Day6(),
+    //        Day7(),
+    //        Day8(),
+    //        Day9(),
+]
+
+private func solve(day: Int? = nil) throws {
+    let day = day ?? kSolvers.endIndex
     let input = try Input(file: File(index: day))
-    let s = solver(at: day)
+    let s = kSolvers[day - 1]
     print("Solutions for day \(day)")
     print("A: \(try s.solveFirst(input: input))")
     print("B: \(try s.solveSecond(input: input))")
 }
 
-private func solver(at index: Int) -> Solver {
-    switch index {
-    case 1: return Day1()
-    case 2: return Day2()
-    case 3: return Day3()
-    case 4: return Day4()
-    case 5: return Day5()
-//    case 6: return Day6()
-//    case 7: return Day7()
-//    case 8: return Day8()
-//    case 9: return Day9()
-    default: fatalError()
-    }
-}
-
 do {
-    try solve(day: 5)
+    try solve()
 } catch let error {
     print(error)
 }
