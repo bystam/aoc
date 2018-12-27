@@ -27,7 +27,7 @@ private func solve(day: Int? = nil) throws {
 }
 
 do {
-    try solve()
+    try solve(day: 8)
 } catch let error {
     print(error)
 }
