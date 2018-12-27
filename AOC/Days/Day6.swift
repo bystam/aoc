@@ -10,63 +10,54 @@ final class Day6: Solver {
     private typealias Location = Point
 
     func solveFirst(input: Input) throws -> String {
-
         let points = Set(input.lines().map(Point.init))
-        let hull = Algorithms.convexHull(of: points)
-        let rect = Algorithms.boundingRect(of: points)
+        let rect = Algorithms
+            .boundingRect(of: points)
+            .insetBy(dx: -2, dy: -2)
+
+        let coordinateClosestToLocation = rect
+            .reduce(into: [Location: Coordinate](), { acc, location in
+                acc[location] = closestCoordinate(to: location, from: points)
+            })
+        let coordinateAreaSizes = coordinateClosestToLocation
+            .values
+            .countedOccurrences()
+
+        let infiniteAreaCoordinates = Set(rect.border()
+            .map { borderPoint in coordinateClosestToLocation[borderPoint]! })
 
         return points
-            .subtracting(hull)
-            .map { p -> Int in
-                let other = points.subtracting([p])
-                return measureReach(from: p, within: rect, untilInsideDomainOf: other)
-            }
+            .subtracting(infiniteAreaCoordinates)
+            .map { coordinateAreaSizes[$0] ?? 0 }
             .max()!
             .description
     }
 
     func solveSecond(input: Input) throws -> String {
-        return ""
+        let points = Set(input.lines().map(Point.init))
+        let rect = Algorithms
+            .boundingRect(of: points)
+            .insetBy(dx: -2, dy: -2)
+
+        let locationDistancesToAllCoordinates = rect
+            .reduce(into: [Location: Int](), { acc, location in
+                acc[location] = totalDistance(from: location, toAll: points)
+            })
+
+        return locationDistancesToAllCoordinates
+            .filter { $0.value < 10000 }
+            .count
+            .description
     }
 
-    private func measureReach(from start: Coordinate, within rect: Rect, untilInsideDomainOf other: Set<Point>) -> Int {
-        var visited: Set<Point> = []
-        var queue: [Point] = [start]
-        while !queue.isEmpty {
-            let p = queue.removeFirst()
+    private func closestCoordinate(to location: Location, from candidates: Set<Coordinate>) -> Coordinate {
+        return candidates.min(by: { $0.manhattanDistance(to: location) < $1.manhattanDistance(to: location) })!
+    }
 
-            if !rect.contains(p) || visited.contains(p) {
-                continue
-            }
-
-            let endReached = other.contains(where: { otherCoordinate in
-                return otherCoordinate.manhattanDistance(to: p) <= start.manhattanDistance(to: p)
-            })
-            if endReached {
-                continue
-            }
-
-            visited.insert(p)
-
-            let up = p.offset(x: 0, y: -1)
-            let down = p.offset(x: 0, y: 1)
-            let right = p.offset(x: 1, y: 0)
-            let left = p.offset(x: -1, y: 0)
-            if !visited.contains(up) {
-                queue.append(up)
-            }
-            if !visited.contains(down) {
-                queue.append(down)
-            }
-            if !visited.contains(right) {
-                queue.append(right)
-            }
-            if !visited.contains(left) {
-                queue.append(left)
-            }
-        }
-
-        return visited.count
+    private func totalDistance(from location: Location, toAll coordinates: Set<Coordinate>) -> Int {
+        return coordinates.reduce(into: 0, { acc, coordinate in
+            acc += coordinate.manhattanDistance(to: location)
+        })
     }
 }
 

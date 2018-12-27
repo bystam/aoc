@@ -10,12 +10,25 @@ struct Point: Hashable {
 
     static let zero: Point = Point(x: 0, y: 0)
 
-    func offset(x: Int, y: Int) -> Point {
+    func offsetBy(x: Int, y: Int) -> Point {
         return Point(x: self.x + x, y: self.y + y)
     }
 
     func manhattanDistance(to other: Point) -> Int {
         return abs(x - other.x) + abs(y - other.y)
+    }
+
+    func applying(_ vector: Vector) -> Point {
+        return Point(x: x + vector.dx, y: y + vector.dy)
+    }
+}
+
+struct Vector: Hashable {
+    var dx: Int
+    var dy: Int
+
+    func rotatedClockwise() -> Vector {
+        return Vector(dx: -dy, dy: dx)
     }
 }
 
@@ -38,6 +51,35 @@ struct Rect: Hashable {
             && point.y >= origin.y
             && point.x < (origin.x + size.width)
             && point.y < (origin.y + size.height)
+    }
+
+    func insetBy(dx: Int, dy: Int) -> Rect {
+        return Rect(x: origin.x - dx, y: origin.y - dy,
+                    width: size.width + 2*dx, height: size.height + 2*dy)
+    }
+
+    func border() -> AnySequence<Point> {
+        var point = topLeft
+        var direction = Vector(dx: 1, dy: 0)
+        var isFirst = true
+        return AnySequence<Point> { () -> AnyIterator<Point> in
+            return AnyIterator<Point> { () -> Point? in
+                let next = point
+
+                if next == self.topLeft && !isFirst {
+                    return nil
+                }
+                isFirst = false
+
+                point = next.applying(direction)
+                if !self.contains(point) {
+                    direction = direction.rotatedClockwise()
+                    point = next.applying(direction)
+                }
+
+                return next
+            }
+        }
     }
 }
 

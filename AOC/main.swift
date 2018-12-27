@@ -11,9 +11,9 @@ private let kSolvers: [Solver] = [
     Day4(),
     Day5(),
     Day6(),
-    //        Day7(),
-    //        Day8(),
-    //        Day9(),
+    Day7(),
+    Day8(),
+    Day9(),
 ]
 
 private func solve(day: Int? = nil) throws {
@@ -26,7 +26,7 @@ private func solve(day: Int? = nil) throws {
 }
 
 do {
-    try solve()
+    try solve(day: 7)
 } catch let error {
     print(error)
 }
