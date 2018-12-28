@@ -19,11 +19,18 @@ private let kSolvers: [Solver] = [
 
 private func solve(day: Int? = nil) throws {
     let day = day ?? kSolvers.endIndex
-    let input = try Input(file: File(index: day))
-    let s = kSolvers[day - 1]
+    let solver = kSolvers[day - 1]
+
+    let input: Input
+    if let mock = solver.mockInput {
+        input = Input(string: mock)
+    } else {
+        input = try Input(file: File(index: day))
+    }
+
     print("Solutions for day \(day)")
-    print("A: \(try s.solveFirst(input: input))")
-    print("B: \(try s.solveSecond(input: input))")
+    print("A: \(try solver.solveFirst(input: input))")
+    print("B: \(try solver.solveSecond(input: input))")
 }
 
 do {

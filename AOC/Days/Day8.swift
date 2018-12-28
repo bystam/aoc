@@ -21,15 +21,17 @@ final class Day8: Solver {
     }
 
     func solveSecond(input: Input) throws -> String {
-        return ""
+        return readTree(from: input.string())
+            .value()
+            .description
     }
 
     private func readTree(from string: String) -> Node {
         let scanner = Scanner(string: string)
-        return readNode(in: scanner)!
+        return readNode(in: scanner)
     }
 
-    private func readNode(in scanner: Scanner) -> Node? {
+    private func readNode(in scanner: Scanner) -> Node {
         var childCount: Int = 0
         var metadataCount: Int = 0
         scanner.scanInt(&childCount)
@@ -40,7 +42,7 @@ final class Day8: Solver {
 
     private func readChildren(count: Int, in scanner: Scanner) -> [Node] {
         return (0..<count).map { _ in
-            return readNode(in: scanner)!
+            return readNode(in: scanner)
         }
     }
 
@@ -81,4 +83,23 @@ private extension Day8.Node {
     func dfs() -> DFS {
         return DFS(root: self)
     }
+}
+
+private extension Day8.Node {
+
+    func value() -> Int {
+        if children.isEmpty {
+            return metadata.reduce(0, +)
+        }
+
+        return metadata
+            .filter { $0 > 0 }
+            .map { $0 - 1 }
+            .reduce(into: 0, { acc, index in
+                if children.indices.contains(index) {
+                    acc += children[index].value()
+                }
+        })
+    }
+
 }

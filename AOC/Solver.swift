@@ -17,6 +17,10 @@ struct Input {
 
     private let data: Data
 
+    init(string: String) {
+        self.data = Data(string.utf8)
+    }
+
     init(file: File) throws {
         self.data = try Data(contentsOf: file.url)
     }
@@ -31,6 +35,16 @@ struct Input {
 }
 
 protocol Solver {
+
+    var mockInput: String? { get }
+
     func solveFirst(input: Input) throws -> String
     func solveSecond(input: Input) throws -> String
+}
+
+extension Solver {
+
+    var mockInput: String? {
+        return nil
+    }
 }
