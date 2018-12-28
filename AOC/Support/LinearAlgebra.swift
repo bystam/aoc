@@ -4,11 +4,20 @@
 
 import Foundation
 
-struct Point: Hashable {
+struct Point: Hashable, CustomStringConvertible {
     var x: Int
     var y: Int
 
     static let zero: Point = Point(x: 0, y: 0)
+
+    var asVector: Vector {
+        return Vector(dx: x, dy: y)
+    }
+
+    init(x: Int, y: Int) {
+        self.x = x
+        self.y = y
+    }
 
     func offsetBy(x: Int, y: Int) -> Point {
         return Point(x: self.x + x, y: self.y + y)
@@ -21,20 +30,45 @@ struct Point: Hashable {
     func applying(_ vector: Vector) -> Point {
         return Point(x: x + vector.dx, y: y + vector.dy)
     }
+
+    var description: String {
+        return "Point{x: \(x), y: \(y)"
+    }
 }
 
-struct Vector: Hashable {
+struct Vector: Hashable, CustomStringConvertible {
     var dx: Int
     var dy: Int
 
+    var inverted: Vector {
+        return Vector(dx: -dx, dy: -dy)
+    }
+
+    init(dx: Int, dy: Int) {
+        self.dx = dx
+        self.dy = dy
+    }
+
     func rotatedClockwise() -> Vector {
         return Vector(dx: -dy, dy: dx)
+    }
+
+    var description: String {
+        return "Vector{dx: \(dx), dy: \(dy)"
     }
 }
 
 struct Size: Hashable {
     var width: Int
     var height: Int
+
+    var area: Int {
+        return width * height
+    }
+
+    func expandedBy(dx: Int, dy: Int) -> Size {
+        return Size(width: width + dx, height: height + dy)
+    }
 }
 
 struct Rect: Hashable {
@@ -81,30 +115,51 @@ struct Rect: Hashable {
             }
         }
     }
+
+    func byColumn() -> AnySequence<Point> {
+        let origin = self.origin
+        let size = self.size
+        return AnySequence { () -> AnyIterator<Point> in
+            let xRange = (origin.x..<origin.x + size.width)
+            let yRange = (origin.y..<origin.y + size.height)
+            var p = origin
+            return AnyIterator { () -> Point? in
+                guard xRange.contains(p.x) && yRange.contains(p.y) else { return nil }
+                let point = p
+                p.y += 1
+                if !yRange.contains(p.y) {
+                    p.y = yRange.startIndex
+                    p.x += 1
+                }
+                return point
+            }
+        }
+    }
+
+    func byRow() -> AnySequence<Point> {
+        let origin = self.origin
+        let size = self.size
+        return AnySequence { () -> AnyIterator<Point> in
+            let xRange = (origin.x..<origin.x + size.width)
+            let yRange = (origin.y..<origin.y + size.height)
+            var p = origin
+            return AnyIterator { () -> Point? in
+                guard xRange.contains(p.x) && yRange.contains(p.y) else { return nil }
+                let point = p
+                p.x += 1
+                if !xRange.contains(p.x) {
+                    p.x = xRange.startIndex
+                    p.y += 1
+                }
+                return point
+            }
+        }
+    }
 }
 
 extension Rect {
     init(x: Int, y: Int, width: Int, height: Int) {
         self.init(origin: .init(x: x, y: y), size: .init(width: width, height: height))
-    }
-}
-
-extension Rect: Sequence {
-
-    func makeIterator() -> AnyIterator<Point> {
-        let xRange = (origin.x..<origin.x + size.width)
-        let yRange = (origin.y..<origin.y + size.height)
-        var p = origin
-        return AnyIterator { () -> Point? in
-            guard xRange.contains(p.x) && yRange.contains(p.y) else { return nil }
-            let point = p
-            p.y += 1
-            if !yRange.contains(p.y) {
-                p.y = yRange.startIndex
-                p.x += 1
-            }
-            return point
-        }
     }
 }
 
@@ -123,6 +178,10 @@ struct Matrix<T> {
     init(width: Int, height: Int, initialValue: T) {
         assert(width > 0 && height > 0)
         inner = [[T]](repeating: [T](repeating: initialValue, count: height), count: width)
+    }
+
+    init(size: Size, initialValue: T) {
+        self.init(width: size.width, height: size.height, initialValue: initialValue)
     }
 
     subscript(x x: Int, y y: Int) -> T {

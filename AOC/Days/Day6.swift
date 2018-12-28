@@ -15,7 +15,7 @@ final class Day6: Solver {
             .boundingRect(of: points)
             .insetBy(dx: -2, dy: -2)
 
-        let coordinateClosestToLocation = rect
+        let coordinateClosestToLocation = rect.byColumn()
             .reduce(into: [Location: Coordinate](), { acc, location in
                 acc[location] = closestCoordinate(to: location, from: points)
             })
@@ -39,7 +39,7 @@ final class Day6: Solver {
             .boundingRect(of: points)
             .insetBy(dx: -2, dy: -2)
 
-        let locationDistancesToAllCoordinates = rect
+        let locationDistancesToAllCoordinates = rect.byColumn()
             .reduce(into: [Location: Int](), { acc, location in
                 acc[location] = totalDistance(from: location, toAll: points)
             })

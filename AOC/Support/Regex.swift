@@ -34,6 +34,12 @@ extension Regex.Match {
         let range = result.range(at: index)
         let start = String.UTF16Index(encodedOffset: range.location)
         let end = String.UTF16Index(encodedOffset: range.location + range.length)
-        return String(source.utf16[start..<end]).flatMap(T.init)
+
+        var matchedString = String(source.utf16[start..<end])
+        if T.self == Int.self {
+            matchedString = matchedString?.trimmingCharacters(in: .whitespaces)
+        }
+
+        return matchedString.flatMap(T.init)
     }
 }

@@ -15,7 +15,7 @@ final class Day3: Solver {
         let squares = input.lines()
             .map(Claim.init)
             .reduce(into: Matrix<Int>(width: 1000, height: 1000, initialValue: 0)) { fabric, claim in
-                claim.rect.forEach { p in
+                claim.rect.byColumn().forEach { p in
                     fabric[x: p.x, y: p.y] += 1
                 }
             }
@@ -29,12 +29,12 @@ final class Day3: Solver {
         let claims = input.lines().map(Claim.init)
         let fabric = claims
             .reduce(into: Matrix<Int>(width: 1000, height: 1000, initialValue: 0)) { fabric, claim in
-                claim.rect.forEach { p in
+                claim.rect.byColumn().forEach { p in
                     fabric[x: p.x, y: p.y] += 1
                 }
             }
         let single = claims.first(where: { claim in
-            claim.rect.allSatisfy({ p in fabric[x: p.x, y: p.y] == 1 })
+            claim.rect.byColumn().allSatisfy({ p in fabric[x: p.x, y: p.y] == 1 })
         })
 
         return single!.id
