@@ -85,20 +85,33 @@ final class Day13: Solver {
         var map = Map(lines: input.lines())
         let collision = (0...10000)
             .lazy
-            .compactMap { _ in self.step(in: &map) }
+            .flatMap { _ in self.step(in: &map) }
             .first!
 
-        return "\(collision.x),\(collision.y)"
+        return "\(collision.point.x),\(collision.point.y)"
     }
 
     func solveSecond(input: Input) throws -> String {
-        return ""
+        var map = Map(lines: input.lines())
+        while map.carts.count > 1 {
+            step(in: &map)
+        }
+
+        return "\(map.carts[0].point.x),\(map.carts[0].point.y)"
     }
 
-    private func step(in map: inout Map) -> Point? {
+    private func step(in map: inout Map) -> [(point: Point, cart: Cart)] {
         map.carts = map.carts.sorted(by: { c1, c2 in c1.point.isFurtherNorthWest(than: c2.point) })
-        for i in map.carts.indices {
-            var cart = map.carts[i]
+
+        var crashedCartIndices: Set<Int> = []
+
+        for index in map.carts.indices {
+
+            if crashedCartIndices.contains(index) {
+                continue
+            }
+
+            var cart = map.carts[index]
             cart.move()
             switch map.matrix[cart.point] {
             case .intersection:
@@ -130,16 +143,26 @@ final class Day13: Solver {
             default:
                 break
             }
-            map.carts[i] = cart
 
-            let crashedCarts = map.carts
-                .grouped(by: { $0.point })
-                .first(where: { $0.value.count > 1 })
-            if let collision = crashedCarts?.value.first?.point {
-                return collision
+            let didCrash: Bool = map.carts.enumerated()
+                .contains(where: { i, c in
+                    return !crashedCartIndices.contains(i) && c.point == cart.point
+                })
+
+            if didCrash {
+                crashedCartIndices.insert(index)
             }
+
+            map.carts[index] = cart
         }
-        return nil
+
+        let crashes: [(Point, Cart)] = map.carts
+            .enumerated()
+            .filter { i, _ in crashedCartIndices.contains(i) }
+            .map { _, c in (c.point, c) }
+
+        map.carts.remove(at: crashedCartIndices)
+        return crashes
     }
 }
 
@@ -223,5 +246,4 @@ private extension Point {
     func isFurtherNorthWest(than other: Point) -> Bool {
         return y <= other.y && x <= other.x
     }
-
 }

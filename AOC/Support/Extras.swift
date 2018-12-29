@@ -148,3 +148,12 @@ extension BidirectionalCollection where Element: Equatable {
         return backtrack(lcsLength(other))
     }
 }
+
+extension Array {
+
+    mutating func remove(at indices: Set<Index>) {
+        indices.sorted().lazy.reversed().forEach { i in
+            self.remove(at: i)
+        }
+    }
+}
