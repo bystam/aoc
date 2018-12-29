@@ -33,7 +33,7 @@ final class Day13: Solver {
 
     fileprivate struct Cart {
         private(set) var point: Point
-        private(set) var direction: Direction
+        var direction: Direction
         private(set) var nextTurn: CartTurn = .left
 
         init(point: Point, direction: Direction) {
@@ -82,12 +82,64 @@ final class Day13: Solver {
     }
 
     func solveFirst(input: Input) throws -> String {
-        let map = Map(lines: input.lines())
-        return "\n\(map)"
+        var map = Map(lines: input.lines())
+        let collision = (0...10000)
+            .lazy
+            .compactMap { _ in self.step(in: &map) }
+            .first!
+
+        return "\(collision.x),\(collision.y)"
     }
 
     func solveSecond(input: Input) throws -> String {
         return ""
+    }
+
+    private func step(in map: inout Map) -> Point? {
+        map.carts = map.carts.sorted(by: { c1, c2 in c1.point.isFurtherNorthWest(than: c2.point) })
+        for i in map.carts.indices {
+            var cart = map.carts[i]
+            cart.move()
+            switch map.matrix[cart.point] {
+            case .intersection:
+                cart.intersectionTurn()
+            case .turn(.west):
+                if cart.direction == .north {
+                    cart.direction = .west
+                } else if cart.direction == .east {
+                    cart.direction = .south
+                } else if cart.direction == .south {
+                    cart.direction = .east
+                } else if cart.direction == .west {
+                    cart.direction = .north
+                } else {
+                    fatalError()
+                }
+            case .turn(.east):
+                if cart.direction == .north {
+                    cart.direction = .east
+                } else if cart.direction == .east {
+                    cart.direction = .north
+                } else if cart.direction == .south {
+                    cart.direction = .west
+                } else if cart.direction == .west {
+                    cart.direction = .south
+                } else {
+                    fatalError()
+                }
+            default:
+                break
+            }
+            map.carts[i] = cart
+
+            let crashedCarts = map.carts
+                .grouped(by: { $0.point })
+                .first(where: { $0.value.count > 1 })
+            if let collision = crashedCarts?.value.first?.point {
+                return collision
+            }
+        }
+        return nil
     }
 }
 
@@ -164,4 +216,12 @@ extension Day13.Map: CustomStringConvertible {
             }
         }
     }
+}
+
+private extension Point {
+
+    func isFurtherNorthWest(than other: Point) -> Bool {
+        return y <= other.y && x <= other.x
+    }
+
 }
