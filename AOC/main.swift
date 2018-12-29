@@ -15,6 +15,7 @@ private let kSolvers: [Solver] = [
     Day8(),
     Day9(),
     Day10(),
+    Day11(),
 ]
 
 private func solve(day: Int? = nil) throws {

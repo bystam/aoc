@@ -32,7 +32,7 @@ struct Point: Hashable, CustomStringConvertible {
     }
 
     var description: String {
-        return "Point{x: \(x), y: \(y)"
+        return "Point{x: \(x), y: \(y)}"
     }
 }
 
@@ -72,6 +72,11 @@ struct Size: Hashable {
 }
 
 struct Rect: Hashable {
+
+    enum Side {
+        case top, right, bottom, left
+    }
+
     var origin: Point
     var size: Size
 
