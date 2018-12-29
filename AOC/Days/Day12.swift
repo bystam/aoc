@@ -67,27 +67,6 @@ final class Day12: Solver {
         }
     }
 
-//    var mockInput: String? {
-//        return """
-//initial state: #..#.#..##......###...###
-//
-//...## => #
-//..#.. => #
-//.#... => #
-//.#.#. => #
-//.#.## => #
-//.##.. => #
-//.#### => #
-//#.#.# => #
-//#.### => #
-//##.#. => #
-//##.## => #
-//###.. => #
-//###.# => #
-//####. => #
-//"""
-//    }
-
     func solveFirst(input: Input) throws -> String {
         let lines = input.lines(includingEmpty: true)
         let initial = Generation(string: lines[0])
