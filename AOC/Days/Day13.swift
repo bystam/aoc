@@ -93,6 +93,7 @@ final class Day13: Solver {
 
     func solveSecond(input: Input) throws -> String {
         var map = Map(lines: input.lines())
+
         while map.carts.count > 1 {
             step(in: &map)
         }
@@ -100,6 +101,7 @@ final class Day13: Solver {
         return "\(map.carts[0].point.x),\(map.carts[0].point.y)"
     }
 
+    @discardableResult
     private func step(in map: inout Map) -> [(point: Point, cart: Cart)] {
         map.carts = map.carts.sorted(by: { c1, c2 in c1.point.isFurtherNorthWest(than: c2.point) })
 
@@ -144,12 +146,13 @@ final class Day13: Solver {
                 break
             }
 
-            let didCrash: Bool = map.carts.enumerated()
-                .contains(where: { i, c in
+            let potentialCrash: (Int, Cart)? = map.carts.enumerated()
+                .first(where: { i, c in
                     return !crashedCartIndices.contains(i) && c.point == cart.point
                 })
 
-            if didCrash {
+            if let crash = potentialCrash {
+                crashedCartIndices.insert(crash.0)
                 crashedCartIndices.insert(index)
             }
 
