@@ -50,9 +50,12 @@ extension Sequence {
     }
 
     func grouped<Identifier: Hashable>(by identity: (Element) throws -> Identifier) rethrows -> [Identifier: [Element]] {
-        return try reduce(into: [:], { acc, element in
-            acc[try identity(element), default: []].append(element)
-        })
+        return try [Identifier: [Element]](grouping: self, by: identity)
+    }
+
+    func indexed<Identifier: Hashable>(by identity: (Element) throws -> Identifier) rethrows -> [Identifier: Element] {
+        return try [Identifier: [Element]](grouping: self, by: identity)
+            .mapValues { $0[0] }
     }
 
     func segmented(size: Int) -> AnySequence<[Element]> {

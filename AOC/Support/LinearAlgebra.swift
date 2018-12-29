@@ -53,6 +53,10 @@ struct Vector: Hashable, CustomStringConvertible {
         return Vector(dx: -dy, dy: dx)
     }
 
+    func rotatedCounterclockwise() -> Vector {
+        return Vector(dx: dy, dy: -dx)
+    }
+
     var description: String {
         return "Vector{dx: \(dx), dy: \(dy)"
     }
@@ -171,31 +175,57 @@ extension Rect {
 struct Matrix<T> {
 
     var width: Int {
-        return inner.count
+        return inner[0].count
     }
 
     var height: Int {
-        return inner[0].count
+        return inner.count
     }
 
     private var inner: [[T]]
 
+    var rows: [[T]] {
+        return inner
+    }
+
     init(width: Int, height: Int, initialValue: T) {
         assert(width > 0 && height > 0)
-        inner = [[T]](repeating: [T](repeating: initialValue, count: height), count: width)
+        inner = [[T]](repeating: [T](repeating: initialValue, count: width), count: height)
     }
 
     init(size: Size, initialValue: T) {
         self.init(width: size.width, height: size.height, initialValue: initialValue)
     }
 
-    subscript(x x: Int, y y: Int) -> T {
+    subscript(p: Point) -> T {
         get {
-            return inner[x][y]
+            return inner[p.y][p.x]
         }
         set {
-            inner[x][y] = newValue
+            inner[p.y][p.x] = newValue
         }
+    }
+
+    subscript(x x: Int, y y: Int) -> T {
+        get {
+            return inner[y][x]
+        }
+        set {
+            inner[y][x] = newValue
+        }
+    }
+
+    func stringify(_ transform: (Point, T) -> Character) -> String {
+        var string = ""
+        for y in (0..<height) {
+            for x in (0..<width) {
+                let point = Point(x: x, y: y)
+                string.append(transform(point, self[point]))
+            }
+            string += "\n"
+        }
+
+        return string
     }
 }
 

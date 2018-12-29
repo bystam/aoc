@@ -18,6 +18,7 @@
 		EB17C0BA21D530DD00438906 /* Day10.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB17C0B921D530DD00438906 /* Day10.swift */; };
 		EB17C0BE21D6868B00438906 /* Day11.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB17C0BD21D6868B00438906 /* Day11.swift */; };
 		EB17C0C021D7832F00438906 /* Day12.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB17C0BF21D7832F00438906 /* Day12.swift */; };
+		EB17C0C221D7B24400438906 /* Day13.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB17C0C121D7B24400438906 /* Day13.swift */; };
 		EB4786A621B8766D0071500F /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB4786A521B8766D0071500F /* main.swift */; };
 		EB4786AF21B876CB0071500F /* Solver.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB4786AE21B876CB0071500F /* Solver.swift */; };
 		EB4786B121B877190071500F /* Day1.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB4786B021B877190071500F /* Day1.swift */; };
@@ -52,6 +53,7 @@
 		EB17C0B921D530DD00438906 /* Day10.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day10.swift; sourceTree = "<group>"; };
 		EB17C0BD21D6868B00438906 /* Day11.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day11.swift; sourceTree = "<group>"; };
 		EB17C0BF21D7832F00438906 /* Day12.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day12.swift; sourceTree = "<group>"; };
+		EB17C0C121D7B24400438906 /* Day13.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day13.swift; sourceTree = "<group>"; };
 		EB4786A221B8766D0071500F /* AOC */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = AOC; sourceTree = BUILT_PRODUCTS_DIR; };
 		EB4786A521B8766D0071500F /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		EB4786AE21B876CB0071500F /* Solver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Solver.swift; sourceTree = "<group>"; };
@@ -127,6 +129,7 @@
 				EB17C0B921D530DD00438906 /* Day10.swift */,
 				EB17C0BD21D6868B00438906 /* Day11.swift */,
 				EB17C0BF21D7832F00438906 /* Day12.swift */,
+				EB17C0C121D7B24400438906 /* Day13.swift */,
 			);
 			path = Days;
 			sourceTree = "<group>";
@@ -244,6 +247,7 @@
 				EB17C0B421D0017300438906 /* Day7.swift in Sources */,
 				EB11DB6221B885D900340117 /* Extras.swift in Sources */,
 				EB867F3721CD35ED008247F6 /* Day2.swift in Sources */,
+				EB17C0C221D7B24400438906 /* Day13.swift in Sources */,
 				EB17C0C021D7832F00438906 /* Day12.swift in Sources */,
 				EB17C0BA21D530DD00438906 /* Day10.swift in Sources */,
 				EB867F4721CD7701008247F6 /* Regex.swift in Sources */,

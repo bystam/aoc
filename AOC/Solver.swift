@@ -26,7 +26,7 @@ struct Input {
     }
 
     func string() -> String {
-        return String(data: data, encoding: .utf8)!.trimmingCharacters(in: .whitespacesAndNewlines)
+        return String(data: data, encoding: .utf8)!.trimmingCharacters(in: .newlines)
     }
 
     func lines(includingEmpty: Bool = false) -> [String] {
