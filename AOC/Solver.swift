@@ -32,6 +32,10 @@ struct Input {
     func lines(includingEmpty: Bool = false) -> [String] {
         return string().split(separator: "\n", omittingEmptySubsequences: !includingEmpty).map(String.init)
     }
+
+    func int() -> Int {
+        return Int(string())!
+    }
 }
 
 protocol Solver {
