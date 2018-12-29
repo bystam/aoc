@@ -26,11 +26,11 @@ struct Input {
     }
 
     func string() -> String {
-        return String(data: data, encoding: .utf8)!
+        return String(data: data, encoding: .utf8)!.trimmingCharacters(in: .whitespacesAndNewlines)
     }
 
-    func lines() -> [String] {
-        return string().split(separator: "\n").map(String.init)
+    func lines(includingEmpty: Bool = false) -> [String] {
+        return string().split(separator: "\n", omittingEmptySubsequences: !includingEmpty).map(String.init)
     }
 }
 
