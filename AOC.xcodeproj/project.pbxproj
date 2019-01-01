@@ -29,6 +29,7 @@
 		EB867F4521CD417D008247F6 /* Day3.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB867F4421CD417D008247F6 /* Day3.swift */; };
 		EB867F4721CD7701008247F6 /* Regex.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB867F4621CD7701008247F6 /* Regex.swift */; };
 		EB867F4921CD7C25008247F6 /* LinearAlgebra.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB867F4821CD7C25008247F6 /* LinearAlgebra.swift */; };
+		EBCD609921DBD36E009C707F /* Day15.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBCD609821DBD36E009C707F /* Day15.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -69,6 +70,7 @@
 		EB867F4421CD417D008247F6 /* Day3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day3.swift; sourceTree = "<group>"; };
 		EB867F4621CD7701008247F6 /* Regex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Regex.swift; sourceTree = "<group>"; };
 		EB867F4821CD7C25008247F6 /* LinearAlgebra.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinearAlgebra.swift; sourceTree = "<group>"; };
+		EBCD609821DBD36E009C707F /* Day15.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day15.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -135,6 +137,7 @@
 				EB17C0BF21D7832F00438906 /* Day12.swift */,
 				EB17C0C121D7B24400438906 /* Day13.swift */,
 				EB17C0C321D81A1100438906 /* Day14.swift */,
+				EBCD609821DBD36E009C707F /* Day15.swift */,
 			);
 			path = Days;
 			sourceTree = "<group>";
@@ -260,6 +263,7 @@
 				EB867F4721CD7701008247F6 /* Regex.swift in Sources */,
 				EB17C0C421D81A1100438906 /* Day14.swift in Sources */,
 				EB17C0B021CFD53F00438906 /* Day6.swift in Sources */,
+				EBCD609921DBD36E009C707F /* Day15.swift in Sources */,
 				EB4786AF21B876CB0071500F /* Solver.swift in Sources */,
 				EB17C0BE21D6868B00438906 /* Day11.swift in Sources */,
 				EB867F4921CD7C25008247F6 /* LinearAlgebra.swift in Sources */,

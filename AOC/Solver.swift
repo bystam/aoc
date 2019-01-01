@@ -51,4 +51,13 @@ extension Solver {
     var mockInput: String? {
         return nil
     }
+
+
+    func solveFirst(input: Input) throws -> String {
+        return "NOT IMPLEMENTED"
+    }
+
+    func solveSecond(input: Input) throws -> String {
+        return "NOT IMPLEMENTED"
+    }
 }
