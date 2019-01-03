@@ -48,52 +48,34 @@ final class Day15: Solver {
     }
 
     private var map: Map = Map(matrix: Matrix(width: 1, height: 1, initialValue: .open))
-    private var units: [Unit] = []
+    private var units: [Unit] = [] {
+        didSet {
+            cachedUnitPositions.removeAll()
+        }
+    }
 
-    private var unitPositions: Set<Point> = []
+    private var cachedUnitPositions: [Point: Unit] = [:]
+    private var unitPositions: [Point: Unit] {
+        if cachedUnitPositions.isEmpty {
+            cachedUnitPositions = units.indexed(by: ^\.position)
+        }
+        return cachedUnitPositions
+    }
 
     func solveFirst(input: Input) throws -> String {
         (self.map, self.units) = parseInput(input.lines())
-        unitPositions = Set(units.map(^\.position))
 
         print("\n==== Initial state ====\n")
         print(stringify(map: map, units: units))
 
-        for r in (1...25) {
+        var r = 1
+        outerloop: while r < 100000 {
             units.sort(by: readingOrder)
 
             var i = 0
             while i < units.count {
-                if let targetIndex = findAttackableSurroundingTarget(of: units[i]) {
-                    units[targetIndex].health -= units[i].attackPower
 
-                    if units[targetIndex].isDead {
-                        unitPositions.remove(units[targetIndex].position)
-                        units.remove(at: targetIndex)
-                        if targetIndex < i {
-                            i -= 1
-                        }
-                    }
-                } else if let step = bfsToClosestAvailableEnemy(from: units[i]).first {
-                    unitPositions.remove(units[i].position)
-                    units[i].position = step
-                    unitPositions.insert(step)
-
-                    if let targetIndex = findAttackableSurroundingTarget(of: units[i]) {
-                        units[targetIndex].health -= units[i].attackPower
-
-                        if units[targetIndex].isDead {
-                            unitPositions.remove(units[targetIndex].position)
-                            units.remove(at: targetIndex)
-                            if targetIndex < i {
-                                i -= 1
-                            }
-                        }
-                    }
-                }
-//                let action = attemptRound(for: units[i])
-//                switch action {
-//                case .attack(let targetIndex):
+//                if let targetIndex = findAttackableSurroundingTarget(of: units[i]) {
 //                    units[targetIndex].health -= units[i].attackPower
 //
 //                    if units[targetIndex].isDead {
@@ -101,39 +83,44 @@ final class Day15: Solver {
 //                        if targetIndex < i {
 //                            i -= 1
 //                        }
-//                    }
-//
-//                case .move(let step):
-//                    unitPositions.remove(units[i].position)
-//                    units[i].position = step
-//                    unitPositions.insert(step)
-//
-//                case .none:
-//                    break
-//                }
+                //                    }
+                //                } else
+                if let step = bfsToClosestAvailableEnemy(from: units[i]).first {
+                    units[i].position = step
+                }
+
+                if let targetIndex = findAttackableSurroundingTarget(of: units[i]) {
+                    units[targetIndex].health -= units[i].attackPower
+
+                    if units[targetIndex].isDead {
+                        units.remove(at: targetIndex)
+                        if targetIndex < i {
+                            i -= 1
+                        }
+                    }
+                }
+
 
                 i += 1
             }
 
             print("\n==== State after \(r) round ====\n")
             print(stringify(map: map, units: units))
+
+            let isDone = Set(units.map(^\.allegiance)).count == 1
+            if isDone {
+                break outerloop
+            }
+
+            r += 1
         }
 
-        return ""
-    }
+        let totalHealth = units.reduce(into: 0) { acc, unit in
+            acc += unit.health
+        }
 
-//    private func attemptRound(for unit: Unit) -> [UnitAction] {
-//        var actions: [UnitAction] = []
-//        if let index = findAttackableSurroundingTarget(of: unit) {
-//            return [.attack(index: index)]
-//        }
-//
-//        if let step = bfsToClosestAvailableEnemy(from: unit).first {
-//            return .move(point: step)
-//        }
-//
-//        return .none
-//    }
+        return (totalHealth * r).description
+    }
 
     private func findAttackableSurroundingTarget(of unit: Unit) -> Int? {
         let surroundings = allOpenPositions(around: unit.position, includingUnits: false)
@@ -144,6 +131,12 @@ final class Day15: Solver {
     }
 
     private func bfsToClosestAvailableEnemy(from unit: Unit) -> [Point] {
+        let isAlreadyNextToEnemy = allOpenPositions(around: unit.position, includingUnits: false)
+            .contains(where: { unitPositions[$0]?.isEnemy(of: unit) == true })
+        if isAlreadyNextToEnemy {
+            return []
+        }
+
         var searchSpace: [Point: Point] = [:]
         let possibleGoals = Set(units
             .filter { $0.isEnemy(of: unit) }
@@ -165,7 +158,7 @@ final class Day15: Solver {
             queue += surroundings
         }
 
-        guard let goal = goalPoint else {
+        guard let goal = goalPoint, goal != unit.position else {
             return []
         }
 
@@ -184,7 +177,7 @@ final class Day15: Solver {
             if map.matrix[nextToPoint] == .wall {
                 return nil
             }
-            if includingUnits && unitPositions.contains(nextToPoint) {
+            if includingUnits && unitPositions.keys.contains(nextToPoint) {
                 return nil
             }
             return nextToPoint
@@ -196,7 +189,9 @@ final class Day15: Solver {
     }
 
     private func readingOrder(_ l: Point, _ r: Point) -> Bool {
-        return l.y <= r.y && l.x < r.x
+        if l.y < r.y { return true }
+        if l.y > r.y { return false }
+        return l.x < r.x
     }
 }
 
