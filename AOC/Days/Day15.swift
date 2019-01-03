@@ -35,17 +35,19 @@ private struct Map {
 
 final class Day15: Solver {
 
-    var mockInput: String? {
-        return """
-        #######
-        #.G...#
-        #...EG#
-        #.#.#G#
-        #..G#E#
-        #.....#
-        #######
-        """
-    }
+//    var mockInput: String? {
+//        return """
+//        #########
+//        #G......#
+//        #.E.#...#
+//        #..##..G#
+//        #...##..#
+//        #...#...#
+//        #.G...G.#
+//        #.....G.#
+//        #########
+//        """
+//    }
 
     private var map: Map = Map(matrix: Matrix(width: 1, height: 1, initialValue: .open))
     private var units: [Unit] = [] {
@@ -68,23 +70,19 @@ final class Day15: Solver {
         print("\n==== Initial state ====\n")
         print(stringify(map: map, units: units))
 
-        var r = 1
+        var r = 0
         outerloop: while r < 100000 {
+
             units.sort(by: readingOrder)
 
             var i = 0
             while i < units.count {
 
-//                if let targetIndex = findAttackableSurroundingTarget(of: units[i]) {
-//                    units[targetIndex].health -= units[i].attackPower
-//
-//                    if units[targetIndex].isDead {
-//                        units.remove(at: targetIndex)
-//                        if targetIndex < i {
-//                            i -= 1
-//                        }
-                //                    }
-                //                } else
+                let isDone = Set(units.map(^\.allegiance)).count == 1
+                if isDone {
+                    break outerloop
+                }
+
                 if let step = bfsToClosestAvailableEnemy(from: units[i]).first {
                     units[i].position = step
                 }
@@ -100,17 +98,10 @@ final class Day15: Solver {
                     }
                 }
 
-
                 i += 1
             }
 
-            print("\n==== State after \(r) round ====\n")
-            print(stringify(map: map, units: units))
-
-            let isDone = Set(units.map(^\.allegiance)).count == 1
-            if isDone {
-                break outerloop
-            }
+            print("\n==== State after \(r+1) round(s) ====\n\(stringify(map: map, units: units))")
 
             r += 1
         }
@@ -126,7 +117,13 @@ final class Day15: Solver {
         let surroundings = allOpenPositions(around: unit.position, includingUnits: false)
         return units.enumerated()
             .filter { $0.element.isEnemy(of: unit) && surroundings.contains($0.element.position) }
-            .min(by: { readingOrder($0.element, $1.element) })?
+            .min(by: {
+                let unit1 = $0.element
+                let unit2 = $1.element
+                if unit1.health < unit2.health { return true }
+                if unit1.health > unit2.health { return false }
+                return readingOrder(unit1, unit2)
+            })?
             .offset
     }
 
