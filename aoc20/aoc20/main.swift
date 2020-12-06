@@ -7,4 +7,18 @@
 
 import Foundation
 
-print(Day1.run())
+func run<D: Day>(_ type: D.Type) {
+    print("""
+    #### Running \(type) ####
+
+    First output:
+        \(type.first())
+
+    Second output:
+        \(type.second())
+
+    #########################
+    """)
+}
+
+run(Day1.self)

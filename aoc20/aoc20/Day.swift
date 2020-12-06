@@ -8,5 +8,15 @@
 import Foundation
 
 protocol Day {
-    static func run() -> String
+    static func first() -> String
+    static func second() -> String
+}
+
+extension Day {
+    static func first() -> String {
+        "NOT YET IMPLEMENTED"
+    }
+    static func second() -> String {
+        "NOT YET IMPLEMENTED"
+    }
 }
