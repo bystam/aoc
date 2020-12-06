@@ -28,3 +28,16 @@ func cross<A: Sequence, B: Sequence, C: Sequence>(
     }
     return AnySequence(seq)
 }
+
+extension Sequence {
+    func countWhere(_ predicate: (Element) -> Bool) -> Int {
+        return lazy.filter(predicate).count
+    }
+}
+
+extension String {
+    func char(at index: Int) -> Character {
+        let i = self.index(startIndex, offsetBy: index)
+        return self[i]
+    }
+}

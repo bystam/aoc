@@ -19,10 +19,51 @@ extension Input {
     func lines<O>(_ mapper: (String) -> O?) -> [O] {
         lines().compactMap(mapper)
     }
+
+    func lines<O: PatternConvertible>(_ type: O.Type) -> [O] {
+        let pattern = type.pattern.replacingOccurrences(
+            of: "*", with: "(.*)"
+        )
+        let regex = try! NSRegularExpression(pattern: pattern, options: [])
+        return lines().map { line in
+            let range = NSRange(location: 0, length: line.utf16.count)
+            let backing = regex.matches(in: line, options: [], range: range)[0]
+            let match = PatternMatch(string: line, backing: backing)
+            return O(match: match)
+        }
+    }
 }
 
 extension Input: ExpressibleByStringLiteral {
     init(stringLiteral value: StaticString) {
         self.string = value.description
+    }
+}
+
+// MARK: - Regexp parsing
+
+protocol PatternConvertible {
+    static var pattern: String { get }
+
+    init(match: PatternMatch)
+}
+
+struct PatternMatch {
+    fileprivate let string: String
+    fileprivate let backing: NSTextCheckingResult
+
+    func int(at index: Int) -> Int {
+        let range = backing.range(at: index + 1)
+        return Int(string[Range(range, in: string)!])!
+    }
+
+    func character(at index: Int) -> Character {
+        let range = backing.range(at: index + 1)
+        return string[Range(range, in: string)!].first!
+    }
+
+    func string(at index: Int) -> String {
+        let range = backing.range(at: index + 1)
+        return String(string[Range(range, in: string)!])
     }
 }
