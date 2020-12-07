@@ -17,6 +17,8 @@
 		EB0E5030257D527C00FDC69A /* Day2.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB0E502F257D527C00FDC69A /* Day2.swift */; };
 		EB0E5035257E1E6300FDC69A /* Day3.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB0E5034257E1E6300FDC69A /* Day3.swift */; };
 		EB0E5038257E1E6C00FDC69A /* Day3_input.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB0E5037257E1E6C00FDC69A /* Day3_input.swift */; };
+		EB0E5041257E87D900FDC69A /* Day4.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB0E5040257E87D900FDC69A /* Day4.swift */; };
+		EB0E5045257E87E300FDC69A /* Day4_input.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB0E5044257E87E300FDC69A /* Day4_input.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -43,6 +45,8 @@
 		EB0E502F257D527C00FDC69A /* Day2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day2.swift; sourceTree = "<group>"; };
 		EB0E5034257E1E6300FDC69A /* Day3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day3.swift; sourceTree = "<group>"; };
 		EB0E5037257E1E6C00FDC69A /* Day3_input.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day3_input.swift; sourceTree = "<group>"; };
+		EB0E5040257E87D900FDC69A /* Day4.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day4.swift; sourceTree = "<group>"; };
+		EB0E5044257E87E300FDC69A /* Day4_input.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day4_input.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,9 +83,10 @@
 				EB036D07257CDD2D00D23CCE /* Day.swift */,
 				EB036D04257CDC2C00D23CCE /* Input.swift */,
 				EB036D0A257CDDA700D23CCE /* Utils.swift */,
-				EB0E5033257E1E5B00FDC69A /* day3 */,
 				EB036D1F257CE24F00D23CCE /* day1 */,
 				EB0E502B257D525700FDC69A /* day2 */,
+				EB0E5033257E1E5B00FDC69A /* day3 */,
+				EB0E503F257E87D000FDC69A /* day4 */,
 			);
 			path = aoc20;
 			sourceTree = "<group>";
@@ -111,6 +116,15 @@
 				EB0E5037257E1E6C00FDC69A /* Day3_input.swift */,
 			);
 			path = day3;
+			sourceTree = "<group>";
+		};
+		EB0E503F257E87D000FDC69A /* day4 */ = {
+			isa = PBXGroup;
+			children = (
+				EB0E5040257E87D900FDC69A /* Day4.swift */,
+				EB0E5044257E87E300FDC69A /* Day4_input.swift */,
+			);
+			path = day4;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -170,7 +184,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EB0E5045257E87E300FDC69A /* Day4_input.swift in Sources */,
 				EB036CF6257CDB5800D23CCE /* main.swift in Sources */,
+				EB0E5041257E87D900FDC69A /* Day4.swift in Sources */,
 				EB0E502D257D526600FDC69A /* Day2_input.swift in Sources */,
 				EB036D21257CE25D00D23CCE /* Day1.swift in Sources */,
 				EB036D25257CE26900D23CCE /* Day1_input.swift in Sources */,

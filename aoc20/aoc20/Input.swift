@@ -12,8 +12,8 @@ struct Input {
 }
 
 extension Input {
-    func lines() -> [String] {
-        string.components(separatedBy: "\n")
+    func lines(separator: String = "\n") -> [String] {
+        string.components(separatedBy: separator)
     }
 
     func lines<O>(_ mapper: (String) -> O?) -> [O] {

@@ -59,3 +59,4 @@ struct Vector {
     var dx: Int
     var dy: Int
 }
+
