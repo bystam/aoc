@@ -66,17 +66,4 @@ struct Day5: Day {
 
         return ids[0].description
     }
-
-    private static func reduce(sequence: String) -> Point {
-        var min = Point(x: 0, y: 0)
-        var max = Point(x: 7, y: 127)
-        sequence.forEach { char in
-            if char == "B" { min.y = (min.y + max.y) / 2 + 1 }
-            if char == "F" { max.y = (min.y + max.y) / 2 }
-            if char == "R" { min.x = (min.x + max.x) / 2 + 1 }
-            if char == "L" { max.x = (min.x + max.x) / 2 }
-        }
-        assert(min == max)
-        return min
-    }
 }
