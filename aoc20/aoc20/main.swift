@@ -21,4 +21,4 @@ func run<D: Day>(_ type: D.Type) {
     """)
 }
 
-run(Day4.self)
+run(Day5.self)
