@@ -41,3 +41,21 @@ extension String {
         return self[i]
     }
 }
+
+struct Point {
+    var x: Int
+    var y: Int
+
+    func offset(x: Int = 0, y: Int = 0) -> Point {
+        return .init(x: self.x + x, y: self.y + y)
+    }
+
+    func offset(by vector: Vector) -> Point {
+        return .init(x: x + vector.dx, y: y + vector.dy)
+    }
+}
+
+struct Vector {
+    var dx: Int
+    var dy: Int
+}
