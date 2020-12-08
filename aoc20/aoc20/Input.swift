@@ -21,10 +21,7 @@ extension Input {
     }
 
     func lines<O: PatternConvertible>(_ type: O.Type) -> [O] {
-        let pattern = type.pattern.replacingOccurrences(
-            of: "*", with: "(.*)"
-        )
-        let regex = try! NSRegularExpression(pattern: pattern, options: [])
+        let regex = NSRegularExpression.compile(type.pattern)
         return lines().map { line in
             let range = NSRange(location: 0, length: line.utf16.count)
             let backing = regex.matches(in: line, options: [], range: range)[0]
@@ -65,5 +62,15 @@ struct PatternMatch {
     func string(at index: Int) -> String {
         let range = backing.range(at: index + 1)
         return String(string[Range(range, in: string)!])
+    }
+}
+
+extension PatternConvertible {
+    init(string: String) {
+        let regex = NSRegularExpression.compile(Self.pattern)
+        let range = NSRange(location: 0, length: string.utf16.count)
+        let backing = regex.matches(in: string, options: [], range: range)[0]
+        let match = PatternMatch(string: string, backing: backing)
+        self.init(match: match)
     }
 }

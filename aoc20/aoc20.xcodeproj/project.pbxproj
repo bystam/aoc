@@ -24,6 +24,9 @@
 		EB0E5051257EB1BC00FDC69A /* LinearAlgebra.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB0E5050257EB1BC00FDC69A /* LinearAlgebra.swift */; };
 		EB193CFA257F8FDF006850AE /* Day6.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB193CF9257F8FDF006850AE /* Day6.swift */; };
 		EB193CFD257F8FE6006850AE /* Day6_input.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB193CFC257F8FE6006850AE /* Day6_input.swift */; };
+		EB193D02257F94D3006850AE /* Day7.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB193D01257F94D3006850AE /* Day7.swift */; };
+		EB193D06257F94DA006850AE /* Day7_input.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB193D05257F94DA006850AE /* Day7_input.swift */; };
+		EB193D09257F9708006850AE /* StringType.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB193D08257F9708006850AE /* StringType.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -57,6 +60,9 @@
 		EB0E5050257EB1BC00FDC69A /* LinearAlgebra.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinearAlgebra.swift; sourceTree = "<group>"; };
 		EB193CF9257F8FDF006850AE /* Day6.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day6.swift; sourceTree = "<group>"; };
 		EB193CFC257F8FE6006850AE /* Day6_input.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day6_input.swift; sourceTree = "<group>"; };
+		EB193D01257F94D3006850AE /* Day7.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day7.swift; sourceTree = "<group>"; };
+		EB193D05257F94DA006850AE /* Day7_input.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day7_input.swift; sourceTree = "<group>"; };
+		EB193D08257F9708006850AE /* StringType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringType.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,8 +98,9 @@
 				EB036CF5257CDB5800D23CCE /* main.swift */,
 				EB036D07257CDD2D00D23CCE /* Day.swift */,
 				EB036D04257CDC2C00D23CCE /* Input.swift */,
-				EB036D0A257CDDA700D23CCE /* Utils.swift */,
-				EB0E5050257EB1BC00FDC69A /* LinearAlgebra.swift */,
+				EB193D01257F94D3006850AE /* Day7.swift */,
+				EB193D05257F94DA006850AE /* Day7_input.swift */,
+				EB193D0C257FB0B7006850AE /* Stuff */,
 				EB036D1F257CE24F00D23CCE /* day1 */,
 				EB0E502B257D525700FDC69A /* day2 */,
 				EB0E5033257E1E5B00FDC69A /* day3 */,
@@ -158,6 +165,16 @@
 			path = day6;
 			sourceTree = "<group>";
 		};
+		EB193D0C257FB0B7006850AE /* Stuff */ = {
+			isa = PBXGroup;
+			children = (
+				EB036D0A257CDDA700D23CCE /* Utils.swift */,
+				EB193D08257F9708006850AE /* StringType.swift */,
+				EB0E5050257EB1BC00FDC69A /* LinearAlgebra.swift */,
+			);
+			path = Stuff;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -217,11 +234,13 @@
 			files = (
 				EB0E5045257E87E300FDC69A /* Day4_input.swift in Sources */,
 				EB036CF6257CDB5800D23CCE /* main.swift in Sources */,
+				EB193D06257F94DA006850AE /* Day7_input.swift in Sources */,
 				EB0E5041257E87D900FDC69A /* Day4.swift in Sources */,
 				EB0E502D257D526600FDC69A /* Day2_input.swift in Sources */,
 				EB0E5051257EB1BC00FDC69A /* LinearAlgebra.swift in Sources */,
 				EB036D21257CE25D00D23CCE /* Day1.swift in Sources */,
 				EB036D25257CE26900D23CCE /* Day1_input.swift in Sources */,
+				EB193D09257F9708006850AE /* StringType.swift in Sources */,
 				EB193CFD257F8FE6006850AE /* Day6_input.swift in Sources */,
 				EB0E504A257EA76800FDC69A /* Day5.swift in Sources */,
 				EB0E504E257EA77000FDC69A /* Day5_input.swift in Sources */,
@@ -231,6 +250,7 @@
 				EB0E5030257D527C00FDC69A /* Day2.swift in Sources */,
 				EB036D08257CDD2D00D23CCE /* Day.swift in Sources */,
 				EB0E5035257E1E6300FDC69A /* Day3.swift in Sources */,
+				EB193D02257F94D3006850AE /* Day7.swift in Sources */,
 				EB036D0B257CDDA700D23CCE /* Utils.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

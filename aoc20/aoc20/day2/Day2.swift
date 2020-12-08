@@ -9,7 +9,7 @@ import Foundation
 
 struct Day2: Day {
     struct Line: PatternConvertible {
-        static let pattern: String = "*-* *: *"
+        static let pattern: String = "(.*)-(.*) (.*): (.*)"
 
         let min: Int
         let max: Int
