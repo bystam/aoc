@@ -98,8 +98,6 @@
 				EB036CF5257CDB5800D23CCE /* main.swift */,
 				EB036D07257CDD2D00D23CCE /* Day.swift */,
 				EB036D04257CDC2C00D23CCE /* Input.swift */,
-				EB193D01257F94D3006850AE /* Day7.swift */,
-				EB193D05257F94DA006850AE /* Day7_input.swift */,
 				EB193D0C257FB0B7006850AE /* Stuff */,
 				EB036D1F257CE24F00D23CCE /* day1 */,
 				EB0E502B257D525700FDC69A /* day2 */,
@@ -107,6 +105,7 @@
 				EB0E503F257E87D000FDC69A /* day4 */,
 				EB0E5048257EA75600FDC69A /* day5 */,
 				EB193CFF257F91AD006850AE /* day6 */,
+				EB193D15257FBB99006850AE /* day7 */,
 			);
 			path = aoc20;
 			sourceTree = "<group>";
@@ -173,6 +172,15 @@
 				EB0E5050257EB1BC00FDC69A /* LinearAlgebra.swift */,
 			);
 			path = Stuff;
+			sourceTree = "<group>";
+		};
+		EB193D15257FBB99006850AE /* day7 */ = {
+			isa = PBXGroup;
+			children = (
+				EB193D01257F94D3006850AE /* Day7.swift */,
+				EB193D05257F94DA006850AE /* Day7_input.swift */,
+			);
+			path = day7;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
