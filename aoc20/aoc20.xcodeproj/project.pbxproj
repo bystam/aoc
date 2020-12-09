@@ -29,6 +29,9 @@
 		EB193D09257F9708006850AE /* StringType.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB193D08257F9708006850AE /* StringType.swift */; };
 		EB193D19257FBC78006850AE /* Day8.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB193D18257FBC78006850AE /* Day8.swift */; };
 		EB193D1C257FBC80006850AE /* Day8_input.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB193D1B257FBC80006850AE /* Day8_input.swift */; };
+		EBC2F5C12580C35C00945B69 /* Algorithm.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBC2F5C02580C35C00945B69 /* Algorithm.swift */; };
+		EBC2F5C42580C70200945B69 /* Day9.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBC2F5C32580C70200945B69 /* Day9.swift */; };
+		EBC2F5C72580C70900945B69 /* Day9_input.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBC2F5C62580C70900945B69 /* Day9_input.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -67,6 +70,9 @@
 		EB193D08257F9708006850AE /* StringType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringType.swift; sourceTree = "<group>"; };
 		EB193D18257FBC78006850AE /* Day8.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day8.swift; sourceTree = "<group>"; };
 		EB193D1B257FBC80006850AE /* Day8_input.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day8_input.swift; sourceTree = "<group>"; };
+		EBC2F5C02580C35C00945B69 /* Algorithm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Algorithm.swift; sourceTree = "<group>"; };
+		EBC2F5C32580C70200945B69 /* Day9.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day9.swift; sourceTree = "<group>"; };
+		EBC2F5C62580C70900945B69 /* Day9_input.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day9_input.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -111,6 +117,7 @@
 				EB193CFF257F91AD006850AE /* day6 */,
 				EB193D15257FBB99006850AE /* day7 */,
 				EB193D1E257FCABB006850AE /* day8 */,
+				EBC2F5C92580C70C00945B69 /* day9 */,
 			);
 			path = aoc20;
 			sourceTree = "<group>";
@@ -175,6 +182,7 @@
 				EB036D0A257CDDA700D23CCE /* Utils.swift */,
 				EB193D08257F9708006850AE /* StringType.swift */,
 				EB0E5050257EB1BC00FDC69A /* LinearAlgebra.swift */,
+				EBC2F5C02580C35C00945B69 /* Algorithm.swift */,
 			);
 			path = Stuff;
 			sourceTree = "<group>";
@@ -195,6 +203,15 @@
 				EB193D1B257FBC80006850AE /* Day8_input.swift */,
 			);
 			path = day8;
+			sourceTree = "<group>";
+		};
+		EBC2F5C92580C70C00945B69 /* day9 */ = {
+			isa = PBXGroup;
+			children = (
+				EBC2F5C32580C70200945B69 /* Day9.swift */,
+				EBC2F5C62580C70900945B69 /* Day9_input.swift */,
+			);
+			path = day9;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -258,10 +275,12 @@
 				EB036CF6257CDB5800D23CCE /* main.swift in Sources */,
 				EB193D1C257FBC80006850AE /* Day8_input.swift in Sources */,
 				EB193D06257F94DA006850AE /* Day7_input.swift in Sources */,
+				EBC2F5C42580C70200945B69 /* Day9.swift in Sources */,
 				EB0E5041257E87D900FDC69A /* Day4.swift in Sources */,
 				EB0E502D257D526600FDC69A /* Day2_input.swift in Sources */,
 				EB0E5051257EB1BC00FDC69A /* LinearAlgebra.swift in Sources */,
 				EB036D21257CE25D00D23CCE /* Day1.swift in Sources */,
+				EBC2F5C72580C70900945B69 /* Day9_input.swift in Sources */,
 				EB036D25257CE26900D23CCE /* Day1_input.swift in Sources */,
 				EB193D09257F9708006850AE /* StringType.swift in Sources */,
 				EB193CFD257F8FE6006850AE /* Day6_input.swift in Sources */,
@@ -272,6 +291,7 @@
 				EB036D05257CDC2C00D23CCE /* Input.swift in Sources */,
 				EB0E5038257E1E6C00FDC69A /* Day3_input.swift in Sources */,
 				EB0E5030257D527C00FDC69A /* Day2.swift in Sources */,
+				EBC2F5C12580C35C00945B69 /* Algorithm.swift in Sources */,
 				EB036D08257CDD2D00D23CCE /* Day.swift in Sources */,
 				EB0E5035257E1E6300FDC69A /* Day3.swift in Sources */,
 				EB193D02257F94D3006850AE /* Day7.swift in Sources */,
