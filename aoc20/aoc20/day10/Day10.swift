@@ -30,28 +30,21 @@ struct Day10: Day {
     static func second() -> String {
         let adapters = day10_input.lines(Jolt.init).sorted()
         var permutations: [Int] = Array(repeating: 0, count: adapters.count)
-        permutations[0] = 1
-        if adapters[1] <= 3 {
-            permutations[1] = permutations[0] + 1
-        }
-        if adapters[2] <= 3 {
-            permutations[2] = permutations[0] + permutations[1] + 1
-        }
 
-        func consider(offset: Int, from current: Int, into result: inout Int) {
-            let jolt = adapters[current]
-            let behind = current + offset
-            let joltBehind = adapters[safe: behind] ?? 0
-            if (jolt - joltBehind) <= 3 {
-                result += permutations[safe: behind] ?? 1
-            }
-        }
-
-        permutations.drop(while: { $0 > 0 }).indices.forEach { index in
+        permutations.indices.forEach { index in
+            let jolt = adapters[index]
             var total = 0
-            consider(offset: -3, from: index, into: &total)
-            consider(offset: -2, from: index, into: &total)
-            consider(offset: -1, from: index, into: &total)
+            if (index - 3) < 0 && jolt <= 3 {
+                total += 1 // there's an extra way to jump into here
+            }
+
+            let lookBack = max(index - 3, 0)
+            (lookBack..<index).forEach { behind in
+                if (jolt - adapters[behind]) <= 3 { // can reach it
+                    total += permutations[behind]
+                }
+            }
+
             permutations[index] = total
         }
 
