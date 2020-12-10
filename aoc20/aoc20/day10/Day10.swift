@@ -34,7 +34,7 @@ struct Day10: Day {
         permutations.indices.forEach { index in
             let jolt = adapters[index]
             var total = 0
-            if (index - 3) < 0 && jolt <= 3 {
+            if jolt <= 3 {
                 total += 1 // there's an extra way to jump into here
             }
 
