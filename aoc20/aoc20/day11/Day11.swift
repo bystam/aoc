@@ -17,12 +17,11 @@ struct Day11: Day {
                 .countWhere { $0 == .occupied }
         }
 
-        var grid: Grid {
-            .init(min: .init(x: 0, y: 0), max: .init(x: squares[0].count - 1, y: squares.count - 1))
-        }
+        var grid: Grid
 
         init(lines: [String]) {
             self.squares = lines.map { $0.compactMap(Square.init(rawValue:)) }
+            self.grid = .init(min: .init(x: 0, y: 0), max: .init(x: squares[0].count - 1, y: squares.count - 1))
         }
 
         subscript(point: Point) -> Square {
@@ -31,12 +30,13 @@ struct Day11: Day {
         }
 
         func occupied(adjacentTo point: Point) -> Int {
-            return Grid(min: point.offset(x: -1, y: -1), max: point.offset(x: 1, y: 1))
-                .filter { $0 != point }
-                .countWhere { p -> Bool in
-                    let square = squares[safe: p.y]?[safe: p.x] ?? .floor
-                    return square == .occupied
-                }
+            var count = 0
+            for p in Grid(min: point.offset(x: -1, y: -1), max: point.offset(x: 1, y: 1)) {
+                if p == point { continue }
+                if !grid.contains(p) { continue }
+                if self[p] == .occupied { count += 1 }
+            }
+            return count
         }
 
         func occupied(asCanBeSeenFrom point: Point) -> Int {
@@ -50,22 +50,24 @@ struct Day11: Day {
                 .init(dx: -1, dy: 0),
                 .init(dx: -1, dy: 1),
             ]
-            return directions.countWhere { direction -> Bool in
-                let seat = walk(from: point, inDirection: direction).lazy
-                    .map { self[$0] }.first(where: { $0 != .floor })
-                return seat == .occupied
-            }
-        }
-
-        private func walk(from start: Point, inDirection direction: Vector) -> AnySequence<Point> {
-            var next = start
-            let grid = self.grid
-            return AnySequence {
-                AnyIterator {
-                    next = next.offset(by: direction)
-                    return grid.contains(next) ? next : nil
+            var count = 0
+            for direction in directions {
+                if findSeat(from: point, inDirection: direction) == .occupied {
+                    count += 1
                 }
             }
+            return count
+        }
+
+        private func findSeat(from start: Point, inDirection direction: Vector) -> Square? {
+            var next = start.offset(by: direction)
+            while grid.contains(next) {
+                if self[next] != .floor {
+                    return self[next]
+                }
+                next = next.offset(by: direction)
+            }
+            return nil
         }
     }
 
@@ -89,6 +91,7 @@ struct Day11: Day {
         var changes: [(Point, Square)] = []
         map.grid.forEach { point in
             let square = map[point]
+            if square == .floor { return }
             let occupied = map.occupied(adjacentTo: point)
             if square == .vacant && occupied == 0 {
                 changes.append((point, .occupied))
@@ -118,6 +121,7 @@ struct Day11: Day {
         var changes: [(Point, Square)] = []
         map.grid.forEach { point in
             let square = map[point]
+            if square == .floor { return }
             let occupied = map.occupied(asCanBeSeenFrom: point)
             if square == .vacant && occupied == 0 {
                 changes.append((point, .occupied))

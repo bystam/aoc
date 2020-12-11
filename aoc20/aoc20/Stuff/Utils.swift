@@ -30,6 +30,7 @@ func cross<A: Sequence, B: Sequence, C: Sequence>(
 }
 
 extension Sequence {
+    @inline(__always)
     func countWhere(_ predicate: (Element) -> Bool) -> Int {
         return lazy.filter(predicate).count
     }
@@ -53,4 +54,21 @@ extension NSRegularExpression {
         cache[pattern] = exp
         return exp
     }
+}
+
+@inline(__always)
+func measure(_ name: String, _ task: () -> Void) {
+    let start = DispatchTime.now().rawValue
+    task()
+    let time =  DispatchTime.now().rawValue - start
+    print("\(name) time: \(TimeInterval(time) / 1_000_000.0)")
+}
+
+@inline(__always)
+func measure<T>(_ name: String, _ task: () -> T) -> T {
+    let start = DispatchTime.now().rawValue
+    let value = task()
+    let time =  DispatchTime.now().rawValue - start
+    print("\(name) time: \(TimeInterval(time) / 1_000_000.0)")
+    return value
 }

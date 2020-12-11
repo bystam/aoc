@@ -29,14 +29,24 @@ struct Grid: Equatable, Sequence {
     var min: Point
     var max: Point
 
+    @inlinable
     func contains(_ point: Point) -> Bool {
         return point.x >= min.x && point.x <= max.x
             && point.y >= min.y && point.y <= max.y
     }
 
-    func makeIterator() -> AnyIterator<Point> {
-        var current = min
-        return AnyIterator { () -> Point? in
+    @inlinable
+    func makeIterator() -> Iterator {
+        return Iterator(min: min, max: max, current: min)
+    }
+
+    struct Iterator: IteratorProtocol {
+        let min: Point
+        let max: Point
+        var current: Point
+
+        @inlinable
+        mutating func next() -> Point? {
             let next = current
             if next.y > max.y { return nil }
             current.x += 1
