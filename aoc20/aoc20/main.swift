@@ -7,18 +7,38 @@
 
 import Foundation
 
-func run<D: Day>(_ type: D.Type) {
-    print("""
-    #### Running \(type) ####
-
-    First output:
-        \(type.first())
-
-    Second output:
-        \(type.second())
-
-    #########################
-    """)
+private func measure<T>(_ task: () -> T) -> (T, time: String) {
+    let start = DispatchTime.now().rawValue
+    let value = task()
+    let time = DispatchTime.now().rawValue - start
+    let interval = TimeInterval(time) / 1_000_000_000.0
+    return (value, String(format: "%.3f", interval))
 }
 
-run(Day10.self)
+func run<D: Day>(_ type: D.Type) {
+    let title = "######## Running \(type) ########"
+    print(title)
+
+    let (firstResult, firstTime) = measure {
+        type.first()
+    }
+    print("""
+
+    First output (time: \(firstTime) s):
+        \(firstResult)
+    """)
+
+    let (secondResult, secondTime) = measure {
+        type.second()
+    }
+    print("""
+
+    Second output (time: \(secondTime) s):
+        \(secondResult)
+
+    """)
+
+    print(String(repeating: "#", count: title.count))
+}
+
+run(Day11.self)

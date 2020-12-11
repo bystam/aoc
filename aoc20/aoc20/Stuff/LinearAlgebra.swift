@@ -29,6 +29,11 @@ struct Grid: Equatable, Sequence {
     var min: Point
     var max: Point
 
+    func contains(_ point: Point) -> Bool {
+        return point.x >= min.x && point.x <= max.x
+            && point.y >= min.y && point.y <= max.y
+    }
+
     func makeIterator() -> AnyIterator<Point> {
         var current = min
         return AnyIterator { () -> Point? in
