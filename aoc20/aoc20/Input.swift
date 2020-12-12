@@ -63,6 +63,12 @@ struct PatternMatch {
         let range = backing.range(at: index + 1)
         return String(string[Range(range, in: string)!])
     }
+
+    func parse<T: RawRepresentable>(_ type: T.Type, at index: Int) -> T where T.RawValue: LosslessStringConvertible {
+        let s = string(at: index)
+        let raw = T.RawValue(s)!
+        return T(rawValue: raw)!
+    }
 }
 
 extension PatternConvertible {

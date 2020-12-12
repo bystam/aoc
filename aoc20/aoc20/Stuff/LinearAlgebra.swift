@@ -8,6 +8,9 @@
 import Foundation
 
 struct Point: Hashable {
+
+    static let origin: Point = .init(x: 0, y: 0)
+
     var x: Int
     var y: Int
 
@@ -23,6 +26,29 @@ struct Point: Hashable {
 struct Vector: Hashable {
     var dx: Int
     var dy: Int
+
+    func times(_ magnitude: Int) -> Vector {
+        .init(dx: dx * magnitude, dy: dy * magnitude)
+    }
+
+    func adding(_ other: Vector) -> Vector {
+        .init(dx: dx + other.dx, dy: dy + other.dy)
+    }
+
+    func rotated(byDegrees degrees: Int) -> Vector {
+        switch degrees {
+        case 0:
+            return self
+        case 90, -270:
+            return .init(dx: dy, dy: -dx)
+        case 180, -180:
+            return .init(dx: -dx, dy: -dy)
+        case 270, -90:
+            return .init(dx: -dy, dy: dx)
+        default:
+            fatalError("Unsupported degrees: \(degrees)")
+        }
+    }
 }
 
 struct Grid: Equatable, Sequence {
@@ -56,5 +82,17 @@ struct Grid: Equatable, Sequence {
             }
             return next
         }
+    }
+}
+
+extension Point: CustomStringConvertible {
+    var description: String {
+        "(x: \(x), y: \(y))"
+    }
+}
+
+extension Vector: CustomStringConvertible {
+    var description: String {
+        "(dx: \(dx), dy: \(dy))"
     }
 }
