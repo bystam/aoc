@@ -14,7 +14,7 @@ struct Day13: Day {
         let arrival = Int(lines[0])!
         let buses = lines[1].components(separatedBy: ",").compactMap(Int.init)
 
-        let alternatives: [((bus: Int, delay: Int))] = buses
+        let alternatives: [(bus: Int, delay: Int)] = buses
             .map { bus in (bus, bus - (arrival % bus)) }
         let (bus, delay) = alternatives.min(by: \.delay)!
 
@@ -24,13 +24,16 @@ struct Day13: Day {
     static func second() -> String {
         let lines = day13_input.lines()
         let entries = lines[1].components(separatedBy: ",")
-        let equations = entries.enumerated().compactMap { offset, entry -> String? in
-            if let bus = Int(entry) {
-                return "y + \(offset) = \(bus) * x\(offset)"
+
+        var result = 0
+        var step = 1
+        entries.enumerated().forEach { offset, entry in
+            guard let bus = Int(entry) else { return }
+            while (result + offset) % bus != 0 {
+                result += step
             }
-            return nil
+            step *= bus
         }
-        // run this system in wolfram alpha, `y` is the answer
-        return equations.joined(separator: ",")
+        return result.description
     }
 }
