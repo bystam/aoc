@@ -34,25 +34,16 @@ extension Sequence {
     func countWhere(_ predicate: (Element) -> Bool) -> Int {
         return lazy.filter(predicate).count
     }
+
+    func min<T: Comparable>(by transform: (Element) -> T) -> Element? {
+        self.min(by: { transform($0) < transform($1) })
+    }
 }
 
 extension String {
     func char(at index: Int) -> Character {
         let i = self.index(startIndex, offsetBy: index)
         return self[i]
-    }
-}
-
-extension NSRegularExpression {
-    private static var cache: [String: NSRegularExpression] = [:]
-
-    static func compile(_ pattern: String) -> NSRegularExpression {
-        if let cached = cache[pattern] {
-            return cached
-        }
-        let exp = try! NSRegularExpression(pattern: pattern, options: [])
-        cache[pattern] = exp
-        return exp
     }
 }
 

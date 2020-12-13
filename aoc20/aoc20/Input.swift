@@ -80,3 +80,16 @@ extension PatternConvertible {
         self.init(match: match)
     }
 }
+
+extension NSRegularExpression {
+    private static var cache: [String: NSRegularExpression] = [:]
+
+    fileprivate static func compile(_ pattern: String) -> NSRegularExpression {
+        if let cached = cache[pattern] {
+            return cached
+        }
+        let exp = try! NSRegularExpression(pattern: pattern, options: [])
+        cache[pattern] = exp
+        return exp
+    }
+}
