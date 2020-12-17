@@ -29,6 +29,21 @@ func cross<A: Sequence, B: Sequence, C: Sequence>(
     return AnySequence(seq)
 }
 
+func cross<A: Sequence, B: Sequence, C: Sequence, D: Sequence>(
+    _ a: A, _ b: B, _ c: C, _ d: D
+) -> AnySequence<(A.Element, B.Element, C.Element, D.Element)> {
+    let seq = a.lazy.flatMap { aVal in
+        b.lazy.flatMap { bVal in
+            c.lazy.flatMap { cVal in
+                d.lazy.map { dVal in
+                    (aVal, bVal, cVal, dVal)
+                }
+            }
+        }
+    }
+    return AnySequence(seq)
+}
+
 extension Sequence {
     @inline(__always)
     func countWhere(_ predicate: (Element) -> Bool) -> Int {

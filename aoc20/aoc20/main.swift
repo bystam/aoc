@@ -41,4 +41,4 @@ func run<D: Day>(_ type: D.Type) {
     print(String(repeating: "#", count: title.count))
 }
 
-run(Day16.self)
+run(Day17.self)
