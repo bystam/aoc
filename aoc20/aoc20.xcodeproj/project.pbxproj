@@ -144,8 +144,6 @@
 				EB036CF5257CDB5800D23CCE /* main.swift */,
 				EB036D07257CDD2D00D23CCE /* Day.swift */,
 				EB036D04257CDC2C00D23CCE /* Input.swift */,
-				EB79CA17258C9DF000BE2862 /* Day18.swift */,
-				EB79CA1A258CA33200BE2862 /* Day18_input.swift */,
 				EB193D0C257FB0B7006850AE /* Stuff */,
 				EB036D1F257CE24F00D23CCE /* day1 */,
 				EB0E502B257D525700FDC69A /* day2 */,
@@ -164,6 +162,7 @@
 				EB2085CB2588B8220085D392 /* day15 */,
 				EB08FAF9258A5DF4009585A5 /* day16 */,
 				EBAC5E48258B45AB0063668D /* day17 */,
+				EB79CA1D258CBC1100BE2862 /* day18 */,
 			);
 			path = aoc20;
 			sourceTree = "<group>";
@@ -303,6 +302,15 @@
 				EB709435258761D300DE54AD /* Day14_input.swift */,
 			);
 			path = day14;
+			sourceTree = "<group>";
+		};
+		EB79CA1D258CBC1100BE2862 /* day18 */ = {
+			isa = PBXGroup;
+			children = (
+				EB79CA17258C9DF000BE2862 /* Day18.swift */,
+				EB79CA1A258CA33200BE2862 /* Day18_input.swift */,
+			);
+			path = day18;
 			sourceTree = "<group>";
 		};
 		EB8FB2B72584F24B002E4322 /* day12 */ = {
