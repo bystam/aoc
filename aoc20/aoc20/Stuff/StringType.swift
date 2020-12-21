@@ -10,10 +10,16 @@ import Foundation
 /// to represent string types, in order to not accidentally
 /// mixing strings up. Tagging a struct with this gives a bunch of
 /// automatic behaviors for that struct type.
-protocol StringType: ExpressibleByStringLiteral, CustomStringConvertible, CustomDebugStringConvertible, Hashable {
+protocol StringType: ExpressibleByStringLiteral, CustomStringConvertible, CustomDebugStringConvertible, Hashable, Comparable {
     var string: String { get }
 
     init(string: String)
+}
+
+extension StringType {
+    static func <(lhs: Self, rhs: Self) -> Bool {
+        lhs.string < rhs.string
+    }
 }
 
 extension StringType {
