@@ -13,9 +13,21 @@ struct Day22: Day {
         case one, two
     }
 
-    struct HistoryEntry: Hashable {
-        var deck1: [Int]
-        var deck2: [Int]
+    struct History {
+        var hashes: Set<Int> = []
+
+        mutating func insert(deck1: [Int], deck2: [Int]) -> Bool {
+            var mult = 100
+            var hash = 0
+            for card in deck1 {
+                hash &+= card &* mult
+                mult &*= 100
+            }
+            for card in deck2 {
+                hash &+= mult &* card
+            }
+            return hashes.insert(hash).inserted
+        }
     }
 
     static func first() -> String {
@@ -59,12 +71,11 @@ struct Day22: Day {
     }
 
     private static func playRecursiveCombat(deck1: inout [Int], deck2: inout [Int]) -> Player {
-        var history: [HistoryEntry] = []
+        var history = History()
 
         while !deck1.isEmpty && !deck2.isEmpty {
-            let entry = HistoryEntry(deck1: deck1, deck2: deck2)
-            if history.contains(entry) { return .one }
-            history.append(entry)
+            let unique = history.insert(deck1: deck1, deck2: deck2)
+            if !unique { return .one }
 
             let card1 = deck1.removeFirst()
             let card2 = deck2.removeFirst()
