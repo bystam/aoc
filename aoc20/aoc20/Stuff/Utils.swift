@@ -50,8 +50,14 @@ extension Sequence {
         return lazy.filter(predicate).count
     }
 
+    @inline(__always)
     func min<T: Comparable>(by transform: (Element) -> T) -> Element? {
         self.min(by: { transform($0) < transform($1) })
+    }
+
+    @inline(__always)
+    func max<T: Comparable>(by transform: (Element) -> T) -> Element? {
+        self.max(by: { transform($0) < transform($1) })
     }
 }
 
