@@ -44,17 +44,38 @@ struct Day23: Day {
     }
 
     static func second() -> String {
-        let cups = createCups(
-            start: [9, 5, 2, 3, 1, 6, 4, 8, 7],
-            padding: 10...1_000_000
-        )
-        play(rounds: 10_000_000, with: cups)
-        let twoAfter1 = Array(
-            cups.first(where: { $0.label == 1 })!
-                .dropFirst()
-                .prefix(2)
-        )
-        let answer = twoAfter1[0].label * twoAfter1[1].label
+        let start = [9, 5, 2, 3, 1, 6, 4, 8, 7]
+        var cups = Array(repeating: 0, count: 1_000_000)
+        for i in start.indices.dropLast() {
+            cups[start[i] - 1] = start[i + 1]
+        }
+        for c in 10..<1_000_000 {
+            cups[c - 1] = c + 1
+        }
+        cups[1_000_000 - 1] = 9
+        cups[7 - 1] = 10
+
+        var current = cups[0]
+        for _ in (0..<10_000_000) {
+            var (a, b, c) = (0, 0, 0)
+            a = cups[current - 1]
+            b = cups[a - 1]
+            c = cups[b - 1]
+            cups[current - 1] = cups[c - 1]
+
+            var destination = current
+            repeat {
+                destination -= 1
+                if destination < 1 { destination = 1_000_000 }
+            } while (a == destination || b == destination || c == destination)
+
+            let next = cups[destination - 1]
+            cups[destination - 1] = a
+            cups[c - 1] = next
+            current = cups[current - 1]
+        }
+
+        let answer = cups[0] * cups[cups[0] - 1]
         return answer.description
     }
 
