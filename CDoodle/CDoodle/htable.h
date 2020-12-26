@@ -9,26 +9,20 @@
 #define htable_h
 
 #include <string.h>
+#include <stdbool.h>
+#include "Model.h"
 
 // MARK: - Fill out model
 
-static int int_hash(int value) {
-    return value;
-}
-
-static char int_eq(int i1, int i2) {
-    return i1 == i2;
-}
-
-#define htable_key int
-#define htable_value char *
-static int(*htable_key_hash)(htable_key) = &int_hash;
-static char(*htable_key_eq)(htable_key, htable_key) = &int_eq;
+#define htable_key Point2
+#define htable_value int
+static int(*htable_key_hash)(htable_key) = &Point2_hash;
+static bool(*htable_key_eq)(htable_key, htable_key) = &Point2_eq;
 
 // MARK: - End fill out model
 
 typedef struct _htable_entry {
-    char populated;
+    bool populated;
     htable_key key;
     htable_value value;
 } htable_entry;
@@ -38,10 +32,21 @@ typedef struct _htable {
     htable_entry *head;
 } htable;
 
+typedef struct _htable_iter {
+    htable_entry *ptr;
+    int distance;
+    int end;
+} htable_iter;
+
 htable htable_create(int length);
 void htable_destroy(htable table);
 htable_entry htable_get(htable table, htable_key key);
+htable_entry *htable_get_ptr(htable table, htable_key key);
 void htable_put(htable table, htable_key key, htable_value value);
 void htable_delete(htable table, htable_key key);
+int htable_count(htable table);
+
+htable_iter htable_iter_make(htable table);
+bool htable_iter_next(htable_iter *iter);
 
 #endif /* htable_h */

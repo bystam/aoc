@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DB2B9EA425967F0000BFC6B9 /* Model.c in Sources */ = {isa = PBXBuildFile; fileRef = DB2B9EA325967F0000BFC6B9 /* Model.c */; };
 		EB9C6BF12594A966001BD432 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = EB9C6BF02594A966001BD432 /* main.c */; };
 		EB9C6BFA2594A97E001BD432 /* htable.c in Sources */ = {isa = PBXBuildFile; fileRef = EB9C6BF92594A97E001BD432 /* htable.c */; };
 /* End PBXBuildFile section */
@@ -24,6 +25,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		DB2B9EA225967E9800BFC6B9 /* Model.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Model.h; sourceTree = "<group>"; };
+		DB2B9EA325967F0000BFC6B9 /* Model.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = Model.c; sourceTree = "<group>"; };
 		EB9C6BED2594A966001BD432 /* CDoodle */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = CDoodle; sourceTree = BUILT_PRODUCTS_DIR; };
 		EB9C6BF02594A966001BD432 /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
 		EB9C6BF82594A97E001BD432 /* htable.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = htable.h; sourceTree = "<group>"; };
@@ -61,6 +64,8 @@
 			isa = PBXGroup;
 			children = (
 				EB9C6BF02594A966001BD432 /* main.c */,
+				DB2B9EA225967E9800BFC6B9 /* Model.h */,
+				DB2B9EA325967F0000BFC6B9 /* Model.c */,
 				EB9C6BF82594A97E001BD432 /* htable.h */,
 				EB9C6BF92594A97E001BD432 /* htable.c */,
 			);
@@ -123,6 +128,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DB2B9EA425967F0000BFC6B9 /* Model.c in Sources */,
 				EB9C6BF12594A966001BD432 /* main.c in Sources */,
 				EB9C6BFA2594A97E001BD432 /* htable.c in Sources */,
 			);
