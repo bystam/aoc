@@ -21,6 +21,10 @@ void htable_destroy(htable table) {
     free(table.head);
 }
 
+void htable_clear(htable table) {
+    memset(table.head, 0, table.length * sizeof(htable_entry));
+}
+
 htable_entry htable_get(htable table, htable_key key) {
     return *_entry_forkey(table, key);
 }

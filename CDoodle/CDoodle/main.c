@@ -13,17 +13,23 @@
 const char *_input[];
 
 htable walkToinitialState(void);
+void simulate100days(htable initial);
+void countNeighbor(htable neighbors, Point2 point);
 
 int main(int argc, const char * argv[]) {
     htable black = walkToinitialState();
 
     printf("First: %d\n", htable_count(black));
 
+    simulate100days(black);
+
+    printf("Second: %d\n", htable_count(black));
+
     return 0;
 }
 
 htable walkToinitialState(void) {
-    htable table = htable_create(1000);
+    htable table = htable_create(10000);
 
     for (int li = 0;; ++li) {
         const char *line = _input[li];
@@ -77,6 +83,52 @@ htable walkToinitialState(void) {
             htable_put(table, point, 1);
         }
     }
+}
+
+void simulate100days(htable black) {
+    htable neighbors = htable_create(100000);
+    for (int i = 0; i < 100; ++i) {
+
+        htable_iter iter = htable_iter_make(black);
+        while (htable_iter_next(&iter)) {
+            htable_put(neighbors, iter.ptr->key, 0);
+        }
+        iter = htable_iter_make(black);
+        while (htable_iter_next(&iter)) {
+            Point2 p = iter.ptr->key;
+            countNeighbor(neighbors, (Point2){ p.x + 2, p.y }); // east
+            countNeighbor(neighbors, (Point2){ p.x - 2, p.y }); // west
+            countNeighbor(neighbors, (Point2){ p.x + 1, p.y + 1 }); // south-east
+            countNeighbor(neighbors, (Point2){ p.x - 1, p.y + 1 }); // south-west
+            countNeighbor(neighbors, (Point2){ p.x + 1, p.y - 1 }); // north-east
+            countNeighbor(neighbors, (Point2){ p.x - 1, p.y - 1 }); // north-west
+        }
+
+        iter = htable_iter_make(neighbors);
+        while (htable_iter_next(&iter)) {
+            Point2 p = iter.ptr->key;
+            int count = iter.ptr->value;
+            bool isBlack = htable_get(black, p).populated;
+
+            if (isBlack) {
+                if (count == 0 || count > 2) {
+                    htable_delete(black, p);
+                }
+            } else {
+                if (count == 2) {
+                    htable_put(black, p, 1);
+                }
+            }
+        }
+
+        htable_clear(neighbors);
+    }
+    htable_destroy(neighbors);
+}
+
+inline void countNeighbor(htable neighbors, Point2 point) {
+    htable_entry entry = htable_get(neighbors, point);
+    htable_put(neighbors, point, entry.populated ? entry.value + 1 : 1);
 }
 
 const char *_input[] = {

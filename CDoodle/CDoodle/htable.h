@@ -40,6 +40,7 @@ typedef struct _htable_iter {
 
 htable htable_create(int length);
 void htable_destroy(htable table);
+void htable_clear(htable table);
 htable_entry htable_get(htable table, htable_key key);
 htable_entry *htable_get_ptr(htable table, htable_key key);
 void htable_put(htable table, htable_key key, htable_value value);
