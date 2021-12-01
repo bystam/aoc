@@ -12,9 +12,9 @@ fun solve(
     customInput: String? = null
 ) {
     val input = if (customInput != null)
-        Input(customInput.lines())
+        Input(customInput.lineSequence())
     else
-        Input(read(day.number))
+        Input(read(day.number).asSequence())
     println("Solution task1: ${day.task1(input)}")
     println("Solution task2: ${day.task2(input)}")
 }
@@ -27,7 +27,7 @@ abstract class Day(
 }
 
 class Input(
-    val lines: List<String>
+    val lines: Sequence<String>
 ) {
     fun ints() = lines.map { it.toInt() }
 }
