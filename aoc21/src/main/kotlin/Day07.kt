@@ -29,8 +29,8 @@ class Day07: Day(7) {
         return distance
     }
 
-    private fun task2Distance(positions: List<Int>, destination: Int): Int = positions.mapIndexed { index, value ->
+    private fun task2Distance(positions: List<Int>, destination: Int): Int = positions.sumOf { value ->
         val distance = abs(value - destination)
         distance * (distance + 1) / 2
-    }.sum()
+    }
 }
