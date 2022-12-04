@@ -1,7 +1,11 @@
 
-fun main(args: Array<String>) = solve(Day0x0())
+class DayX: Day {
 
-class Day0x0: Day(0x0) {
+    companion object {
+        @JvmStatic
+        fun main(args: Array<String>) = solve(DayX())
+    }
+
     override fun task1(input: Input): Any {
         return "TODO"
     }

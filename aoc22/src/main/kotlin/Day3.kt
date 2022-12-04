@@ -1,7 +1,11 @@
 
-fun main(args: Array<String>) = solve(Day3())
+class Day3: Day {
 
-class Day3: Day(3) {
+    companion object {
+        @JvmStatic
+        fun main(args: Array<String>) = solve(Day3())
+    }
+
     override fun task1(input: Input): Any {
         return input.lines
             .map { it.substring(0, it.length / 2) to it.substring(it.length / 2) }

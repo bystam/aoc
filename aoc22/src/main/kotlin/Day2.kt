@@ -1,8 +1,12 @@
 import java.lang.RuntimeException
 
-fun main(args: Array<String>) = solve(Day2())
+class Day2: Day {
 
-class Day2: Day(2) {
+    companion object {
+        @JvmStatic
+        fun main(args: Array<String>) = solve(Day2())
+    }
+
     override fun task1(input: Input): Any {
         var score = 0
         for (line in input.lines) {

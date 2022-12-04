@@ -12,19 +12,18 @@ fun solve(
         println("Test solution task2: ${day.task2(input)}")
     }
 
-    val input = Input(read(day.number).asSequence())
+    val number = day::class.simpleName!!.removePrefix("Day").toInt()
+    val input = Input(read(number).asSequence())
     println("Real solution task1: ${day.task1(input)}")
     println("Real solution task2: ${day.task2(input)}")
 }
 
-abstract class Day(
-    val number: Int
-) {
+interface Day {
 
-    open val testInput: String? = null
+    val testInput: String? get() = null
 
-    open fun task1(input: Input): Any { return "Not implemented" }
-    open fun task2(input: Input): Any { return "Not implemented" }
+    fun task1(input: Input): Any { return "Not implemented" }
+    fun task2(input: Input): Any { return "Not implemented" }
 }
 
 class Input(

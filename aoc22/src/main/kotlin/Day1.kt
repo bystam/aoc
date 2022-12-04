@@ -1,7 +1,5 @@
 
-fun main(args: Array<String>) = solve(Day1())
-
-class Day1: Day(1) {
+class Day1: Day {
     override fun task1(input: Input): Any {
         return elves(input).max()
     }
