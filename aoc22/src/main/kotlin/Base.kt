@@ -29,6 +29,8 @@ interface Day {
 class Input(
     val lines: Sequence<String>
 ) {
+    fun text(): String = lines.joinToString("\n")
+
     fun ints(): Sequence<Int> = lines.map { it.toInt() }
 
     fun capture(pattern: String): Sequence<MatchResult.Destructured> {
