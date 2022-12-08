@@ -1,3 +1,4 @@
+import java.awt.Point
 
 data class Point2D(
     val x: Int,
@@ -7,6 +8,11 @@ data class Point2D(
 
     override fun toString(): String = "($x,$y)"
 }
+
+data class Vec2D(
+    val dx: Int,
+    val dy: Int
+)
 
 class Grid2D<T>(
     input: List<List<T>>
@@ -22,6 +28,10 @@ class Grid2D<T>(
     operator fun get(x: Int, y: Int): T = data[y][x]
     operator fun get(p: Point2D): T = get(p.x, p.y)
     operator fun set(p: Point2D, value: T) { data[p.y][p.x] = value }
+
+    fun contains(point: Point2D): Boolean {
+        return point.x in 0 until width && point.y in 0 until height
+    }
 
     fun allPoints(): Sequence<Point2D> = (0 until height).asSequence()
         .flatMap { y ->
@@ -49,6 +59,18 @@ class Grid2D<T>(
     )
         .filter { it.x in 0 until width && it.y in 0 until height }
         .map { Square(get(it), it) }
+
+    fun walk(start: Point2D, dir: Vec2D): Sequence<Square<T>> = walk(start, dir.dx, dir.dy)
+
+    fun walk(start: Point2D, dx: Int, dy: Int): Sequence<Square<T>> {
+        var p: Point2D? = start
+        fun next(): Point2D? {
+            p = p?.offset(dx, dy)?.takeIf { contains(it) }
+            return p
+        }
+        return generateSequence(next()) { next() }
+            .map { Square(get(it), it) }
+    }
 
     data class Square<T>(
         val value: T,
