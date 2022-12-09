@@ -1,18 +1,39 @@
-import java.awt.Point
-
 data class Point2D(
     val x: Int,
     val y: Int,
 ) {
-    fun offset(dx: Int = 0, dy: Int = 0) = Point2D(x + dx, y + dy)
+    fun offset(dx: Int = 0, dy: Int = 0): Point2D = Point2D(x + dx, y + dy)
+    fun offset(v: Vec2D): Point2D = offset(v.dx, v.dy)
+    fun distance(to: Point2D): Vec2D = Vec2D(to.x - x, to.y - y)
 
     override fun toString(): String = "($x,$y)"
+
+    companion object {
+        val origin: Point2D = Point2D(0, 0)
+    }
 }
 
 data class Vec2D(
     val dx: Int,
     val dy: Int
-)
+) {
+    companion object {
+        val north = Vec2D(0, -1)
+        val south = Vec2D(0, 1)
+        val east = Vec2D(1, 0)
+        val west = Vec2D(-1, 0)
+        val northWest = north + west
+        val northEast = north + east
+        val southWest = south + west
+        val southEast = south + east
+
+        val allOrthogonal: List<Vec2D> = listOf(north, east, south, west)
+        val allDiagonal: List<Vec2D> = listOf(northWest, northEast, southWest, southEast)
+        val all: List<Vec2D> = allOrthogonal + allDiagonal
+    }
+
+    operator fun plus(other: Vec2D): Vec2D = Vec2D(dx + other.dx, dy + other.dy)
+}
 
 class Grid2D<T>(
     input: List<List<T>>
