@@ -6,16 +6,28 @@ import java.net.URL
 fun solve(
     day: Day
 ) {
+
+    fun timed(task: () -> Any): Pair<Any, Long> {
+        val start = System.currentTimeMillis()
+        val ret = task()
+        val time = System.currentTimeMillis() - start
+        return ret to time
+    }
+
     day.testInput?.let {
         val input = Input(it.lineSequence())
-        println("Test solution task1: ${day.task1(input)}")
-        println("Test solution task2: ${day.task2(input)}")
+        val (ret1, time1) = timed { day.task1(input) }
+        println("Test solution task1: $ret1 (time $time1 ms)")
+        val (ret2, time2) = timed { day.task2(input) }
+        println("Test solution task2: $ret2 (time $time2 ms)")
     }
 
     val number = day::class.simpleName!!.removePrefix("Day").toInt()
     val input = Input(read(number).asSequence())
-    println("Real solution task1: ${day.task1(input)}")
-    println("Real solution task2: ${day.task2(input)}")
+    val (ret1, time1) = timed { day.task1(input) }
+    println("Real solution task1: $ret1 (time $time1 ms)")
+    val (ret2, time2) = timed { day.task2(input) }
+    println("Real solution task2: $ret2 (time $time2 ms)")
 }
 
 interface Day {
