@@ -36,13 +36,13 @@ data class Vec2D(
 }
 
 class Grid2D<T>(
-    input: List<List<T>>
+    rows: List<List<T>>
 ) {
 
-    private val data: MutableList<MutableList<T>> = input.map { it.toMutableList() }.toMutableList()
+    private val data: MutableList<MutableList<T>> = rows.map { it.toMutableList() }.toMutableList()
 
-    val width: Int = input[0].size
-    val height: Int = input.size
+    val width: Int = rows[0].size
+    val height: Int = rows.size
 
     val rows: List<List<T>> get() = data
 
