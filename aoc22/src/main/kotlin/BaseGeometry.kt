@@ -1,3 +1,5 @@
+import kotlin.math.absoluteValue
+
 data class Point2D(
     val x: Int,
     val y: Int,
@@ -5,6 +7,16 @@ data class Point2D(
     fun offset(dx: Int = 0, dy: Int = 0): Point2D = Point2D(x + dx, y + dy)
     fun offset(v: Vec2D): Point2D = offset(v.dx, v.dy)
     fun distance(to: Point2D): Vec2D = Vec2D(to.x - x, to.y - y)
+    fun walk(toExcluding: Point2D): List<Point2D> {
+        val result = mutableListOf<Point2D>()
+        val direction = this.distance(toExcluding).toUnitVector()
+        var point = this
+        while (point != toExcluding) {
+            result += point
+            point = point.offset(direction)
+        }
+        return result
+    }
 
     override fun toString(): String = "($x,$y)"
 
@@ -17,6 +29,17 @@ data class Vec2D(
     val dx: Int,
     val dy: Int
 ) {
+
+    val isOrthogonal: Boolean get() = dx == 0 || dy == 0
+
+    fun toUnitVector(): Vec2D {
+        assert(isOrthogonal)
+        return Vec2D(
+            dx = if (dx == 0) 0 else dx / dx.absoluteValue,
+            dy = if (dy == 0) 0 else dy / dy.absoluteValue,
+        )
+    }
+
     companion object {
         val north = Vec2D(0, -1)
         val south = Vec2D(0, 1)
