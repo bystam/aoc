@@ -7,6 +7,8 @@ data class Point2D(
     fun offset(dx: Int = 0, dy: Int = 0): Point2D = Point2D(x + dx, y + dy)
     fun offset(v: Vec2D): Point2D = offset(v.dx, v.dy)
     fun distance(to: Point2D): Vec2D = Vec2D(to.x - x, to.y - y)
+    fun manhattanDistance(to: Point2D): Int = distance(to).manhattanLength
+
     fun walk(toExcluding: Point2D): List<Point2D> {
         val result = mutableListOf<Point2D>()
         val direction = this.distance(toExcluding).toUnitVector()
@@ -31,6 +33,8 @@ data class Vec2D(
 ) {
 
     val isOrthogonal: Boolean get() = dx == 0 || dy == 0
+
+    val manhattanLength: Int = dx.absoluteValue + dy.absoluteValue
 
     fun toUnitVector(): Vec2D {
         assert(isOrthogonal)
