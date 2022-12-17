@@ -28,8 +28,8 @@ data class Point2D(
 }
 
 data class Vec2D(
-    val dx: Int,
-    val dy: Int
+    val dx: Int = 0,
+    val dy: Int = 0
 ) {
 
     val isOrthogonal: Boolean get() = dx == 0 || dy == 0
