@@ -124,4 +124,11 @@ class Grid2D<T>(
         val value: T,
         val point: Point2D
     )
+
+    companion object {
+        fun charMatrix(lines: Sequence<String>): Grid2D<Char> {
+            val rows = lines.map { line -> line.map { it } }.toList()
+            return Grid2D(rows)
+        }
+    }
 }
