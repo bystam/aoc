@@ -1,6 +1,6 @@
 
-fun Iterable<Int>.product(): Int {
-    return fold(1) { acc, next -> acc * next }
+fun Iterable<Long>.product(): Long {
+    return fold(1L) { acc, next -> acc * next }
 }
 
 fun String.splitIgnoreEmpty(delimiter: String) = this.split(delimiter).filter { it.isNotEmpty() }
