@@ -7,7 +7,7 @@ class DayX: Day {
     }
 
     override fun task1(input: Input): Any {
-        return "TODO"
+        return input.text()
     }
 
     override fun task2(input: Input): Any {
