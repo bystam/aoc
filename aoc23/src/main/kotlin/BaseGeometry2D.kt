@@ -33,6 +33,8 @@ data class Vec2D(
 ) {
 
     val isOrthogonal: Boolean get() = dx == 0 || dy == 0
+    val isHorizontal: Boolean get() = dy == 0
+    val isVertical: Boolean get() = dx == 0
 
     val manhattanLength: Int = dx.absoluteValue + dy.absoluteValue
 
