@@ -122,6 +122,22 @@ class Grid2D<T>(
             .map { Square(get(it), it) }
     }
 
+    fun transposed(): Grid2D<T> {
+        val numRows = this.width
+        val numCols = this.height
+        val rows = mutableListOf<List<T>>()
+        repeat(numRows) { r ->
+            val row = mutableListOf<T>()
+            repeat(numCols) { c ->
+                row += this.get(x = r, y = c)
+            }
+            rows += row
+        }
+        assert(rows.size == this.rows.first().size)
+        assert(rows.first().size == this.rows.size)
+        return Grid2D(rows)
+    }
+
     data class Square<T>(
         val value: T,
         val point: Point2D
@@ -133,4 +149,8 @@ class Grid2D<T>(
             return Grid2D(rows)
         }
     }
+}
+
+fun Grid2D<Char>.gridString(): String = rows.joinToString("\n") {
+    it.joinToString("")
 }
