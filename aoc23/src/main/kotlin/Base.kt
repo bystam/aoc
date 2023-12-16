@@ -22,17 +22,20 @@ fun solve(
         println("Test solution task2: $ret2 (time $time2 ms)")
     }
 
-    val number = day::class.simpleName!!.removePrefix("Day").toInt()
-    val input = Input(read(number).asSequence())
-    val (ret1, time1) = timed { day.task1(input) }
-    println("Real solution task1: $ret1 (time $time1 ms)")
-    val (ret2, time2) = timed { day.task2(input) }
-    println("Real solution task2: $ret2 (time $time2 ms)")
+    if (!day.skipReal) {
+        val number = day::class.simpleName!!.removePrefix("Day").toInt()
+        val input = Input(read(number).asSequence())
+        val (ret1, time1) = timed { day.task1(input) }
+        println("Real solution task1: $ret1 (time $time1 ms)")
+        val (ret2, time2) = timed { day.task2(input) }
+        println("Real solution task2: $ret2 (time $time2 ms)")
+    }
 }
 
 interface Day {
 
     val testInput: String? get() = null
+    val skipReal: Boolean get() = false
 
     fun task1(input: Input): Any { return "Not implemented" }
     fun task2(input: Input): Any { return "Not implemented" }
