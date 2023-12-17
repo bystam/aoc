@@ -51,6 +51,8 @@ data class Vec2D(
         Rotation90.COUNTERCLOCKWISE -> Vec2D(dx = dy, dy = -dx)
     }
 
+    operator fun times(factor: Int): Vec2D = Vec2D(factor * dx, factor * dy)
+
     companion object {
         val north = Vec2D(0, -1)
         val south = Vec2D(0, 1)
@@ -81,6 +83,8 @@ class Grid2D<T>(
 
     val width: Int = rows[0].size
     val height: Int = rows.size
+    val upperLeft: Point2D get() = Point2D.origin
+    val lowerRight: Point2D get() = Point2D(x = width - 1, y = height - 1)
 
     val rows: List<List<T>> get() = data
 
