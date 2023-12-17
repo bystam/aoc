@@ -46,6 +46,11 @@ data class Vec2D(
         )
     }
 
+    fun rotated(rotation: Rotation90): Vec2D = when (rotation) {
+        Rotation90.CLOCKWISE -> Vec2D(dx = -dy, dy = dx)
+        Rotation90.COUNTERCLOCKWISE -> Vec2D(dx = dy, dy = -dx)
+    }
+
     companion object {
         val north = Vec2D(0, -1)
         val south = Vec2D(0, 1)
@@ -62,6 +67,10 @@ data class Vec2D(
     }
 
     operator fun plus(other: Vec2D): Vec2D = Vec2D(dx + other.dx, dy + other.dy)
+}
+
+enum class Rotation90 {
+    CLOCKWISE, COUNTERCLOCKWISE
 }
 
 class Grid2D<T>(
