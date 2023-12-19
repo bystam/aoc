@@ -27,6 +27,30 @@ data class Point2D(
     }
 }
 
+data class BoundingRect2D(
+    val min: Point2D,
+    val max: Point2D
+) {
+
+    operator fun contains(point: Point2D): Boolean {
+        return min.x <= point.x && min.y <= point.y &&
+                max.x >= point.x && max.y >= point.y;
+    }
+
+    companion object {
+        fun enclosing(points: Iterable<Point2D>): BoundingRect2D {
+            val minX = points.minOf { it.x }
+            val minY = points.minOf { it.y }
+            val maxX = points.maxOf { it.x }
+            val maxY = points.maxOf { it.y }
+            return BoundingRect2D(
+                min = Point2D(minX, minY),
+                max = Point2D(maxX, maxY),
+            )
+        }
+    }
+}
+
 data class Vec2D(
     val dx: Int = 0,
     val dy: Int = 0
