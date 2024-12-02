@@ -59,7 +59,7 @@ class Input(
 }
 
 private fun read(day: Int): List<String> {
-    val url = URI("https://adventofcode.com/2024/day/1/input").toURL()
+    val url = URI("https://adventofcode.com/2024/day/$day/input").toURL()
     val connection = url.openConnection() as HttpURLConnection
     val session = System.getenv("AOC_TOKEN")
     connection.setRequestProperty("Cookie", " session=$session")
