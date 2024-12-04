@@ -116,6 +116,10 @@ class Grid2D<T>(
     operator fun get(p: Point2D): T = get(p.x, p.y)
     operator fun set(p: Point2D, value: T) { data[p.y][p.x] = value }
 
+    fun getSafe(p: Point2D): T? {
+        return if (contains(p)) get(p.x, p.y) else null
+    }
+
     fun contains(point: Point2D): Boolean {
         return point.x in 0 until width && point.y in 0 until height
     }
