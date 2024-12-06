@@ -15,12 +15,13 @@ fun solve(
         return ret to time
     }
 
-    day.testInput?.let {
-        val input = Input(it.lineSequence())
+    if (day.testInput.isNotEmpty()) {
+        val input = Input(day.testInput.lineSequence())
         val (ret1, time1) = timed { day.task1(input) }
         println("Test solution task1: $ret1 (time $time1 ms)")
         val (ret2, time2) = timed { day.task2(input) }
         println("Test solution task2: $ret2 (time $time2 ms)")
+
     }
 
     if (!day.skipReal) {
@@ -35,7 +36,7 @@ fun solve(
 
 interface Day {
 
-    val testInput: String? get() = null
+    val testInput: String get() = ""
     val skipReal: Boolean get() = false
 
     fun task1(input: Input): Any { return "Not implemented" }
