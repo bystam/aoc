@@ -120,7 +120,7 @@ class Grid2D<T>(
         return if (contains(p)) get(p.x, p.y) else null
     }
 
-    fun contains(point: Point2D): Boolean {
+    operator fun contains(point: Point2D): Boolean {
         return point.x in 0 until width && point.y in 0 until height
     }
 
