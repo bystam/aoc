@@ -76,6 +76,7 @@ data class Vec2D(
     }
 
     operator fun times(factor: Int): Vec2D = Vec2D(factor * dx, factor * dy)
+    operator fun unaryMinus(): Vec2D = Vec2D(-dx, -dy)
 
     companion object {
         val north = Vec2D(0, -1)
