@@ -180,6 +180,17 @@ class Grid2D<T>(
         return Grid2D(rows)
     }
 
+    fun stringify(transform: (value: T, point: Point2D, ) -> Char): String {
+        val builder = StringBuilder()
+        rows.forEachIndexed { y, row ->
+            row.forEachIndexed { x, value ->
+                builder.append(transform(value, Point2D(x, y)))
+            }
+            builder.append('\n')
+        }
+        return builder.toString()
+    }
+
     data class Square<T>(
         val value: T,
         val point: Point2D
