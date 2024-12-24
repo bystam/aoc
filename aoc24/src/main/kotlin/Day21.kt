@@ -1,140 +1,169 @@
-import kotlin.math.absoluteValue
-
 object Day21 : Day {
 
     @JvmStatic
     fun main(args: Array<String>) = solve(Day21)
 
-    override val testInput: String
-        get() = """
-            029A
-            980A
-            179A
-            456A
-            379A
-        """.trimIndent()
-
-    override val skipReal: Boolean
-        get() = true
-
     override fun task1(input: Input): Any {
-        return input.lines.sumOf {
-            val moves = generateMyMoves(it)
-            moves.size * it.substring(0, 3).toInt()
+        return input.lines.sumOf { line ->
+            val totalDistance = shortestPath(line, 2, Numpad, mutableMapOf())
+            val numberPart = line.removeSuffix("A").toLong()
+            totalDistance * numberPart
         }
-    }
-
-    private fun generateMyMoves(keyCode: String): List<Move> {
-        val keyPoints = keyCode.map { numpadPointOf(it) }
-
-        val robot1 = RobotAtNumpad()
-        val robot2 = RobotAtKeyboard()
-        val robot3 = RobotAtKeyboard()
-
-        val movesAfter1 = keyPoints.flatMap {
-            robot1.moveTo(it)
-        }
-        val movesAfter2 = movesAfter1.split(Move.A).flatMap {
-            robot2.smartHandle(it + Move.A)
-        }
-        val movesAfter3 = movesAfter2.split(Move.A).flatMap {
-            robot3.smartHandle(it + Move.A)
-        }
-        println("""
-            keyCode: $keyCode
-            movesAfter1: ${movesAfter1.joinToString("") { it.char.toString() }}
-            movesAfter2: ${movesAfter2.joinToString("") { it.char.toString() }}
-            movesAfter3: ${movesAfter3.joinToString("") { it.char.toString() }}
-        """.trimIndent())
-        return movesAfter3
     }
 
     override fun task2(input: Input): Any {
-        return "TODO"
-    }
-
-    abstract class Robot {
-        abstract var arm: Point2D
-
-        fun moveTo(point: Point2D): List<Move> {
-            val moves = mutableListOf<Move>()
-            val distance = arm.distance(point)
-            repeat(distance.dx.absoluteValue) {
-                moves += if (distance.dx < 0) Move.LEFT else Move.RIGHT
-            }
-            repeat(distance.dy.absoluteValue) {
-                moves += if (distance.dy < 0) Move.UP else Move.DOWN
-            }
-            moves += Move.A
-
-            for (move in moves) {
-                arm += move.direction
-            }
-
-            return moves
+        return input.lines.sumOf { line ->
+            val totalDistance = shortestPath(line, 25, Numpad, mutableMapOf())
+            val numberPart = line.removeSuffix("A").toLong()
+            totalDistance * numberPart
         }
     }
 
-    class RobotAtNumpad : Robot() {
-        override var arm: Point2D = numpadPointOf('A')
-    }
+    private fun shortestPath(
+        keys: String,
+        depth: Int,
+        keyboard: Keyboard,
+        cache: MutableMap<Pair<String, Int>, Long>
+    ): Long {
+        return cache.getOrPut(keys to depth) {
+            "A$keys".windowed(2).sumOf { fromTo ->
+                val (from, to) = (fromTo[0] to fromTo[1])
+                val allPossiblePaths = keyboard.paths[from to to]!!
 
-    class RobotAtKeyboard : Robot() {
-        override var arm: Point2D = Move.A.position
+                if (depth == 0)
+                    return@sumOf allPossiblePaths.minOf { it.length.toLong() }
 
-        fun smartHandle(moves: List<Move>): List<Move> {
-            val moveByType = moves.groupBy { it }.mapValues { it.value.size }
-            val moveOrder = moveByType.keys.minus(Move.A).sortedBy { a ->
-                a.position.manhattanDistance(arm)
-            }
-
-            val result = mutableListOf<Move>()
-            for (move in moveOrder) {
-                repeat(moveByType[move]!!) {
-                    result += moveTo(move.position)
+                allPossiblePaths.minOf { path ->
+                    shortestPath(path, depth - 1, Directional, cache)
                 }
             }
-            result += moveTo(Move.A.position)
-            return result
         }
     }
 
-    enum class Move(val position: Point2D, val direction: Vec2D, val char: Char) {
-        LEFT(Point2D(0, 1), Vec2D.west, '<'),
-        RIGHT(Point2D(2, 1), Vec2D.east, '>'),
-        UP(Point2D(1, 0), Vec2D.north, '^'),
-        DOWN(Point2D(1, 1), Vec2D.south, 'v'),
-        A(Point2D(2, 0), Vec2D(0, 0), 'A');
-    }
-
-    private fun numpadPointOf(char: Char): Point2D = when (char) {
-        '0' -> Point2D(1, 3)
-        '1' -> Point2D(0, 2)
-        '2' -> Point2D(1, 2)
-        '3' -> Point2D(2, 2)
-        '4' -> Point2D(0, 1)
-        '5' -> Point2D(1, 1)
-        '6' -> Point2D(2, 2)
-        '7' -> Point2D(0, 3)
-        '8' -> Point2D(1, 0)
-        '9' -> Point2D(2, 0)
-        'A' -> Point2D(2, 3)
-        else -> TODO()
-    }
-
-    private fun <T> List<T>.split(separator: T): List<List<T>> {
-        val result = mutableListOf<MutableList<T>>()
-        var current = mutableListOf<T>()
-        for (element in this) {
-            if (element == separator) {
-                if (current.isNotEmpty()) {
-                    result.add(current)
-                    current = mutableListOf()
+    abstract class Keyboard(
+        private val graph: Map<Char, List<Edge>>
+    ) {
+        val paths: Map<Pair<Char, Char>, List<String>> = buildMap {
+            graph.keys.forEach { from ->
+                graph.keys.forEach { to ->
+                    put(Pair(from, to), allWalks(from, to))
                 }
-            } else {
-                current += element
             }
         }
-        return result
+
+        private fun allWalks(from: Char, to: Char): List<String> {
+            data class Step(
+                val current: Char,
+                val steps: List<Char>,
+                val history: Set<Char>
+            )
+
+            val result = mutableListOf<String>()
+            val queue = mutableListOf(Step(from, emptyList(), setOf(from)))
+            while (queue.isNotEmpty()) {
+                val (current, steps, history) = queue.removeFirst()
+
+                if (current == to) {
+                    result += steps.joinToString("") + "A"
+                    continue
+                }
+
+                val neighbors = graph[current]!!
+                    .filter { it.destination !in history }
+                for ((dir, key) in neighbors) {
+                    queue += Step(key, steps + dir, history + key)
+                }
+            }
+
+            val shortest = result.minOf { it.length }
+            return result.filter { it.length == shortest }
+        }
     }
+
+    object Numpad : Keyboard(
+        graph = mapOf(
+            'A' to listOf(
+                Edge('<', '0'),
+                Edge('^', '3')
+            ),
+            '0' to listOf(
+                Edge('>', 'A'),
+                Edge('^', '2')
+            ),
+            '1' to listOf(
+                Edge('>', '2'),
+                Edge('^', '4'),
+            ),
+            '2' to listOf(
+                Edge('>', '3'),
+                Edge('^', '5'),
+                Edge('v', '0'),
+                Edge('<', '1'),
+            ),
+            '3' to listOf(
+                Edge('^', '6'),
+                Edge('v', 'A'),
+                Edge('<', '2'),
+            ),
+            '4' to listOf(
+                Edge('>', '5'),
+                Edge('^', '7'),
+                Edge('v', '1'),
+            ),
+            '5' to listOf(
+                Edge('>', '6'),
+                Edge('^', '8'),
+                Edge('v', '2'),
+                Edge('<', '4'),
+            ),
+            '6' to listOf(
+                Edge('^', '9'),
+                Edge('v', '3'),
+                Edge('<', '5'),
+            ),
+            '7' to listOf(
+                Edge('>', '8'),
+                Edge('v', '4'),
+            ),
+            '8' to listOf(
+                Edge('>', '9'),
+                Edge('v', '5'),
+                Edge('<', '7'),
+            ),
+            '9' to listOf(
+                Edge('v', '6'),
+                Edge('<', '8'),
+            ),
+        )
+    )
+
+    object Directional : Keyboard(
+        graph = mapOf(
+            'A' to listOf(
+                Edge('<', '^'),
+                Edge('v', '>')
+            ),
+            '^' to listOf(
+                Edge('>', 'A'),
+                Edge('v', 'v')
+            ),
+            '>' to listOf(
+                Edge('^', 'A'),
+                Edge('<', 'v')
+            ),
+            'v' to listOf(
+                Edge('^', '^'),
+                Edge('<', '<'),
+                Edge('>', '>'),
+            ),
+            '<' to listOf(
+                Edge('>', 'v'),
+            ),
+        )
+    )
+
+    data class Edge(
+        val direction: Char,
+        val destination: Char
+    )
 }
