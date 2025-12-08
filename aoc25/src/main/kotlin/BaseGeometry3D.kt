@@ -1,3 +1,5 @@
+import kotlin.math.pow
+import kotlin.math.sqrt
 
 data class Point3D(
     val x: Int,
@@ -7,6 +9,8 @@ data class Point3D(
     fun offset(dx: Int = 0, dy: Int = 0, dz: Int = 0): Point3D = Point3D(x + dx, y + dy, z + dz)
     fun offset(v: Vec3D): Point3D = offset(v.dx, v.dy, v.dz)
     override fun toString(): String = "($x,$y,$z)"
+
+    fun distanceTo(other: Point3D): Double = sqrt((other.x - x).toDouble().pow(2) + (other.y - y).toDouble().pow(2) + (other.z - z).toDouble().pow(2))
 
     companion object {
         val origin: Point3D = Point3D(0, 0, 0)
